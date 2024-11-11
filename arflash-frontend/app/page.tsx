@@ -139,7 +139,10 @@ function LandingPageComponent() {
             transition={{ duration: 0.5, delay: 0.4 }}>
             <Button
               size="lg"
-              className="bg-gradient-to-r from-blue-400 to-blue-700 text-white text-lg px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+              className="bg-gradient-to-r from-blue-400 to-blue-700 text-white text-lg px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+              onClick={() =>
+                (window.location.href = "https://calc1f4r.gitbook.io/arflash/")
+              }>
               Start Your Flashloan <ArrowRight className="ml-2" />
             </Button>
           </motion.div>
@@ -182,11 +185,7 @@ function LandingPageComponent() {
             initial={{ opacity: 0, y: 20 }}
             animate={controls}
             custom={1}>
-            Our flashloan protocol on Arweave's AOS (AssemblyScript on Steroids)
-            harnesses the power of hyperparallel computing to deliver instant
-            liquidity with secure, verifiable transactions. Built for modern
-            DeFi needs, it maximizes performance without sacrificing
-            transparency or trust.
+             Our flash loan protocol on Arweave's AOS (Arweave Operating System) harnesses the power of hyperparallel computing to deliver instant liquidity with secure, verifiable transactions. Built for modern DeFi needs, it maximizes performance without sacrificing transparency or trust.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
@@ -343,21 +342,25 @@ function LandingPageComponent() {
               title: "DeFi Arbitrage",
               description:
                 "Exploit price inefficiencies across decentralized exchanges without needing upfront capital, thanks to single-block flashloan execution.",
+              link: "https://example.com/defi-arbitrage",
             },
             {
               title: "High-Frequency Trading (HFT)",
               description:
                 "Enable automated, high-speed trading strategies that capitalize on small, rapid price movements across various DeFi platforms.",
+              link: "https://example.com/high-frequency-trading",
             },
             {
               title: "Cross-Chain Operations",
               description:
                 "Leverage hyperparallel processing for efficient multi-chain transfers, allowing seamless asset management across ecosystems.",
+              link: "https://example.com/cross-chain-operations",
             },
             {
               title: "Yield Optimization",
               description:
                 "Enhance returns on liquidity pools and other DeFi investments by temporarily increasing positions with flashloaned funds.",
+              link: "https://example.com/yield-optimization",
             },
           ].map((useCase, index) => (
             <motion.div
@@ -370,7 +373,12 @@ function LandingPageComponent() {
                   {useCase.title}
                 </h3>
                 <p className="text-zinc-900 mb-4">{useCase.description}</p>
-                <Button variant="outline" className="mt-auto group">
+                <Button
+                  variant="outline"
+                  className="mt-auto group"
+                  onClick={() =>
+                    window.open(useCase.link, "_blank", "noopener noreferrer")
+                  }>
                   Learn More
                   <ArrowUpRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                 </Button>
@@ -493,21 +501,24 @@ function LandingPageComponent() {
           {[
             {
               title: "Getting Started Guide",
-              icon: BookOpen,
               description:
                 "Access our developer documentation to set up, configure, and deploy flashloan strategies on AOS.",
+              link: "https://calc1f4r.gitbook.io/arflash/",
+              icon: BookOpen,
             },
             {
               title: "API Documentation",
-              icon: Code,
               description:
                 "Explore our comprehensive API, designed for seamless integration and scalability, whether you're building DeFi products or personalizing your trading tools.",
+              link: "https://calc1f4r.gitbook.io/arflash/",
+              icon: Code,
             },
             {
               title: "Developer Support",
-              icon: Github,
               description:
                 "Join our community on GitHub and Discord to connect with other developers, share ideas, and troubleshoot with the AOS team.",
+              link: "https://www.arweaveindia.com/",
+              icon: Shield,
             },
           ].map((resource, index) => {
             const IconComponent = resource.icon;
@@ -527,7 +538,16 @@ function LandingPageComponent() {
                   <p className="text-zinc-900 mb-4 flex-grow">
                     {resource.description}
                   </p>
-                  <Button variant="outline" className="mt-auto group">
+                  <Button
+                    variant="outline"
+                    className="mt-auto group"
+                    onClick={() =>
+                      window.open(
+                        resource.link,
+                        "_blank",
+                        "noopener noreferrer"
+                      )
+                    }>
                     Explore
                     <ArrowUpRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                   </Button>
@@ -550,19 +570,40 @@ function LandingPageComponent() {
         <div className="max-w-3xl mx-auto">
           {[
             {
-              question: "What is a flashloan?",
+              question: "What is AOS?",
               answer:
-                "A flashloan is an uncollateralized loan that must be repaid within the same transaction. It's a powerful tool for traders and DeFi users.",
+                "AOS (Arweave Operating System) is a decentralized platform that enables efficient and scalable applications, leveraging the power of blockchain technology.",
             },
             {
-              question: "Why choose AOS flashloans?",
+              question: "How do flashloans work?",
               answer:
-                "Our protocol's hyperparallel processing and verifiable computation make flashloans faster, more scalable, and gas-efficient on Arweave AOS.",
+                "Flashloans allow users to borrow assets without collateral, provided the loan is repaid within the same transaction. This enables various financial strategies in DeFi.",
             },
             {
-              question: "What are the gas fees like?",
+              question: "What are the benefits of using flashloans?",
               answer:
-                "Our protocol is optimized for minimal gas usage, lowering transaction costs, especially during high-frequency operations.",
+                "Flashloans provide opportunities for arbitrage, liquidity provision, and other financial maneuvers without the need for upfront capital, making them a powerful tool in decentralized finance.",
+            },
+            {
+              question: "Are flashloans safe to use?",
+              answer:
+                "While flashloans themselves are not inherently risky, they can be used in complex strategies that may expose users to market volatility and smart contract vulnerabilities.",
+            },
+            {
+              question:
+                "What types of transactions can I perform with flashloans?",
+              answer:
+                "Flashloans can be used for various purposes, including arbitrage, collateral swaps, and liquidity provision, allowing users to capitalize on market inefficiencies.",
+            },
+            {
+              question: "How can I access flashloans on AOS?",
+              answer:
+                "To access flashloans on AOS, you need to follow the developer documentation which defines the way to access the flashloan functionality",
+            },
+            {
+              question: "What are the fees associated with flashloans?",
+              answer:
+                "Flashloan fees vary by protocol but are generally a small percentage of the loan amount. It's important to check the specific terms of the protocol you are using. 0.",
             },
           ].map((faq, index) => (
             <motion.div
@@ -598,7 +639,6 @@ function LandingPageComponent() {
         </div>
       </motion.section>
 
-      {/* Footer */}
       <footer className="bg-white py-8 px-4 border-t border-blue-200">
         <div className="max-w-6xl mx-auto flex flex-wrap justify-between items-center">
           <div className="text-zinc-900 mb-4 md:mb-0">
@@ -606,7 +646,7 @@ function LandingPageComponent() {
           </div>
           <nav className="flex space-x-4">
             <a
-              href="#"
+              href="/about"
               className="text-zinc-900 hover:text-blue-900 transition-colors">
               About Us
             </a>

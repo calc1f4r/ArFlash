@@ -12,7 +12,7 @@ const Navbar = () => {
         <div className="flex space-x-4">
           <Link href="/contact" className="text-foreground transition duration-300 ease-in-out hover:text-blue-500">Contact</Link>  
           <Link href="/about-us" className="text-foreground transition duration-300 ease-in-out hover:text-blue-500">About Us</Link>
-          <Link href="/flashloan" className="text-foreground transition duration-300 ease-in-out hover:text-blue-500">Get Flashloaning</Link>
+          <Link href="https://calc1f4r.gitbook.io/arflash/" className="text-foreground transition duration-300 ease-in-out hover:text-blue-500">Get Flashloaning</Link>
         </div>
       </div>
     </nav>
