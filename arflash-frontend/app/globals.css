@@ -2,8 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Add anime-themed font */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Fredoka One', cursive;
 }
 
 @layer base {

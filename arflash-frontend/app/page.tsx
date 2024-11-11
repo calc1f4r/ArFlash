@@ -116,14 +116,14 @@ function LandingPageComponent() {
         />
         <div className="relative z-10 text-center max-w-5xl px-4 sm:px-6 lg:px-8">
           <motion.h1
-            className="text-5xl sm:text-6xl lg:text-7xl font-extrabold mb-6 text-blue-800"
+            className="text-5xl sm:text-6xl lg:text-7xl font-extrabold mb-6 bg-gradient-to-r from-blue-400 to-blue-700 bg-clip-text text-transparent"
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, type: "spring", stiffness: 100 }}>
             Infinite Liquidity. Lightning Speed.
           </motion.h1>
           <motion.p
-            className="text-xl sm:text-2xl mb-8 text-blue-600 max-w-3xl mx-auto"
+            className="text-xl sm:text-2xl mb-8 text-zinc-900 max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
@@ -141,7 +141,7 @@ function LandingPageComponent() {
             transition={{ duration: 0.5, delay: 0.4 }}>
             <Button
               size="lg"
-              className="bg-blue-600 hover:bg-blue-700 text-white text-lg px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+              className="bg-gradient-to-r from-blue-400 to-blue-700 text-white text-lg px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
               Start Your Flashloan <ArrowRight className="ml-2" />
             </Button>
           </motion.div>
@@ -152,7 +152,7 @@ function LandingPageComponent() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.8 }}
         />
-        <motion.div
+        {/* <motion.div
           className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
           animate={floatingAnimation}>
           <Image
@@ -162,7 +162,7 @@ function LandingPageComponent() {
             height={200}
             className="opacity-30"
           />
-        </motion.div>
+        </motion.div> */}
       </motion.section>
 
       {/* About the Protocol */}
@@ -180,7 +180,7 @@ function LandingPageComponent() {
             About the Protocol
           </motion.h2>
           <motion.p
-            className="text-lg sm:text-xl text-blue-600 mb-8"
+            className="text-lg sm:text-xl text-zinc-900 mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={controls}
             custom={1}>
@@ -195,11 +195,11 @@ function LandingPageComponent() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}>
             <Image
-              src="/placeholder.svg?height=300&width=600"
+              src="/aboutProtocol.png"
               alt="Arweave AOS Architecture"
               width={600}
               height={300}
-              className="rounded-lg shadow-lg mx-auto"
+              className="rounded-lg shadow-lg mx-auto border-4 border-pink-200"
             />
           </motion.div>
         </div>
@@ -211,7 +211,7 @@ function LandingPageComponent() {
         variants={staggerContainer}
         initial="hidden"
         animate="show">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 text-blue-900">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 text-blue-900 bg-gradient-to-r from-blue-200 to-blue-900 bg-clip-text text-transparent">
           Key Features
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
@@ -220,7 +220,7 @@ function LandingPageComponent() {
               title: "Hyperparallel Processing",
               icon: Cpu,
               description:
-                "Utilize AOS's hyperparallel technology to process multiple transactions simultaneously, reducing wait times and boosting throughput.",
+                "Utilize AOS's hyperparallel contracts to process multiple transactions simultaneously, reducing wait times and boosting throughput.",
             },
             {
               title: "Verifiable Computation",
@@ -229,16 +229,16 @@ function LandingPageComponent() {
                 "Each transaction on AOS is self-auditing and secure, offering transparency and proof of authenticity in every operation.",
             },
             {
-              title: "Flexible Loan Terms",
+              title: "Max Liquidity",
               icon: Droplets,
               description:
-                "Our protocol's design lets you configure custom loan parameters tailored to your trading strategies, enhancing control over each transaction.",
+                "Whether you're executing trades or providing liquidity, you can count on our system to deliver optimal performance.",
             },
             {
-              title: "Gas Optimization",
-              icon: Gauge,
+              title: "Instant Transactions",
+              icon: ArrowRight,
               description:
-                "AOS's framework optimizes every transaction for minimal gas usage, cutting costs and improving efficiency, especially in high-frequency scenarios.",
+                "Experience lightning-fast transaction speeds with our optimized protocol, ensuring your operations are executed in real-time.",
             },
           ].map((feature, index) => (
             <motion.div
@@ -246,7 +246,7 @@ function LandingPageComponent() {
               variants={cardVariants}
               initial="hidden"
               animate="visible">
-              <Card className="bg-white p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-blue-100 h-full transform hover:scale-105">
+              <Card className="bg-white p-6 shadow-md hover:shadow-lg transition-all duration-300 border-2 border-blue-300 h-full transform hover:scale-105">
                 <motion.div
                   whileHover={{ rotate: 360 }}
                   transition={{ duration: 0.5 }}>
@@ -255,7 +255,7 @@ function LandingPageComponent() {
                 <h3 className="text-xl font-semibold mb-2 text-blue-900">
                   {feature.title}
                 </h3>
-                <p className="text-blue-600">{feature.description}</p>
+                <p className="text-zinc-900">{feature.description}</p>
               </Card>
             </motion.div>
           ))}
@@ -264,7 +264,7 @@ function LandingPageComponent() {
 
       {/* How It Works */}
       <motion.section
-        className="py-20 px-4 bg-white"
+        className="py-10 px-6 bg-white"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}>
@@ -298,19 +298,19 @@ function LandingPageComponent() {
               <motion.li
                 key={index}
                 className="mb-10 ml-6"
-                initial={{ opacity: 0, x: -50 }}
+                initial={{ opacity: 0, x: 50 }}
                 animate={controls}
                 custom={index}>
                 <motion.span
-                  className="absolute flex items-center justify-center w-8 h-8 bg-blue-900 rounded-full -left-4 ring-4 ring-white text-white"
+                  className="absolute flex items-center justify-center w-8 h-8 bg-blue-900 rounded-full -left-8 ring-4 ring-white text-white"
                   whileHover={{ scale: 1.2 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}>
                   {index + 1}
                 </motion.span>
-                <h3 className="font-semibold text-xl mb-1 text-blue-900">
+                <h3 className="ml-3 font-semibold text-xl mb-1 text-blue-900 mt-2">
                   {step.title}
                 </h3>
-                <p className="text-blue-600">{step.description}</p>
+                <p className="text-zinc-900">{step.description}</p>
               </motion.li>
             ))}
           </ol>
@@ -321,11 +321,11 @@ function LandingPageComponent() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}>
           <Image
-            src="/placeholder.svg?height=400&width=800"
+            src="/Arflash.svg"
             alt="Flashloan process diagram"
             width={800}
             height={400}
-            className="rounded-lg shadow-lg mx-auto"
+            className="rounded-lg border-4 border-blue-100 shadow-lg mx-auto transition-transform duration-300 transform hover:scale-105 hover:shadow-xl"
           />
         </motion.div>
       </motion.section>
@@ -371,7 +371,7 @@ function LandingPageComponent() {
                 <h3 className="text-xl font-semibold mb-2 text-blue-900">
                   {useCase.title}
                 </h3>
-                <p className="text-blue-600 mb-4">{useCase.description}</p>
+                <p className="text-zinc-900 mb-4">{useCase.description}</p>
                 <Button variant="outline" className="mt-auto group">
                   Learn More
                   <ArrowUpRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
@@ -393,7 +393,7 @@ function LandingPageComponent() {
             Security and Trust
           </h2>
           <motion.p
-            className="text-lg sm:text-xl text-blue-600 mb-8"
+            className="text-lg sm:text-xl text-zinc-900 mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={controls}>
             Security is at the core of our protocol. With AOS's built-in
@@ -435,7 +435,7 @@ function LandingPageComponent() {
                   <h3 className="text-lg font-semibold mb-2 text-blue-900">
                     {feature.title}
                   </h3>
-                  <p className="text-sm text-blue-600">{feature.description}</p>
+                  <p className="text-sm text-zinc-900">{feature.description}</p>
                 </Card>
               </motion.div>
             ))}
@@ -526,7 +526,7 @@ function LandingPageComponent() {
                   <h3 className="text-xl font-semibold mb-2 text-blue-900">
                     {resource.title}
                   </h3>
-                  <p className="text-blue-600 mb-4 flex-grow">
+                  <p className="text-zinc-900 mb-4 flex-grow">
                     {resource.description}
                   </p>
                   <Button variant="outline" className="mt-auto group">
@@ -580,7 +580,7 @@ function LandingPageComponent() {
                 <motion.div
                   animate={{ rotate: isOpen === index ? 180 : 0 }}
                   transition={{ duration: 0.3 }}>
-                  <ChevronDown className="text-blue-600" />
+                  <ChevronDown className="text-zinc-900" />
                 </motion.div>
               </button>
               <AnimatePresence>
@@ -591,7 +591,7 @@ function LandingPageComponent() {
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.3 }}
                     className="overflow-hidden">
-                    <p className="text-blue-600 pl-4">{faq.answer}</p>
+                    <p className="text-zinc-900 pl-4">{faq.answer}</p>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -603,23 +603,23 @@ function LandingPageComponent() {
       {/* Footer */}
       <footer className="bg-white py-8 px-4 border-t border-blue-200">
         <div className="max-w-6xl mx-auto flex flex-wrap justify-between items-center">
-          <div className="text-blue-600 mb-4 md:mb-0">
+          <div className="text-zinc-900 mb-4 md:mb-0">
             © 2024 Arflash Protocol. All rights reserved.
           </div>
           <nav className="flex space-x-4">
             <a
               href="#"
-              className="text-blue-600 hover:text-blue-900 transition-colors">
+              className="text-zinc-900 hover:text-blue-900 transition-colors">
               About Us
             </a>
             <a
               href="#"
-              className="text-blue-600 hover:text-blue-900 transition-colors">
+              className="text-zinc-900 hover:text-blue-900 transition-colors">
               Contact
             </a>
             <a
               href="#"
-              className="text-blue-600 hover:text-blue-900 transition-colors">
+              className="text-zinc-900 hover:text-blue-900 transition-colors">
               Privacy Policy
             </a>
           </nav>
@@ -627,7 +627,7 @@ function LandingPageComponent() {
             href="https://github.com/calc1f4r/ArFlash"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 hover:text-blue-900 transition-colors">
+            className="text-zinc-900 hover:text-blue-900 transition-colors">
             <Github className="w-6 h-6" />
           </a>
         </div>
