@@ -100,7 +100,7 @@ function LandingPageComponent() {
       {/* Hero Section */}
       <motion.section
         className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 to-white"
-        style={{ opacity, scale }}>
+        style={{ opacity, scale, background: "linear-gradient(to bottom, #b3e5fc, #ffffff)" }}>
         <motion.div
           className="absolute inset-0 z-0"
           animate={{
