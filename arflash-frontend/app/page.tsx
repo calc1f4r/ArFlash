@@ -273,24 +273,24 @@ function LandingPageComponent() {
           <ol className="relative border-l border-blue-200">
             {[
               {
-                title: "Connect Wallet",
+                title: "Step 1: Initiate the Loan Request",
                 description:
-                  "Integrate any compatible wallet to seamlessly access flashloan features.",
+                  "Begin by calling the requestLoan() function. This function requires specific parameters, including the process ID (aos process id) where you want to receive the loan and the desired loan amount. Ensure that your wallet is connected and compatible with the AOS network, as this integration allows for seamless access to flashloan features. This step is crucial for setting up the transaction and ensuring that all necessary information is provided.",
               },
               {
-                title: "Define Loan Parameters",
+                title: " Token Approval and Receipt",
                 description:
-                  "Set up flashloan specifics—amount, terms, and duration—to customize your transaction.",
+                  "Once the loan request is initiated, the process ID will approve the transfer of tokens to your specified account ID (ao.id). After the approval, the onloanreceived() function is automatically called to confirm the receipt of the tokens. In this handler itself you have to ensure that you are defining all the operations used.",
               },
               {
-                title: "Execute Transaction",
+                title: "Execute the Transaction",
                 description:
-                  "Hyperparallel processing kicks in, executing transactions with industry-leading speed and security.",
+                  "With the tokens now in your account, you can execute the intended transaction. This may involve various operations such as self-liquidation, arbitrage, or other DeFi strategies. It is essential to act quickly and efficiently during this step to capitalize on market opportunities. The flexibility of flashloans allows you to leverage the borrowed funds for immediate trading or investment actions without the need for upfront capital.",
               },
               {
-                title: "Repayment Process",
+                title: "Repayment of the Loan",
                 description:
-                  "Complete the transaction in the allotted timeframe to close the flashloan cycle, with no hidden fees.",
+                  "After successfully utilizing the loaned tokens, you must return them to the original process ID. This repayment includes any accrued interest or fees as stipulated in the loan agreement. Timely repayment is critical to maintaining trust within the DeFi ecosystem and avoiding penalties. Ensure that you have the necessary funds available to complete this step and finalize the transaction.",
               },
             ].map((step, index) => (
               <motion.li
