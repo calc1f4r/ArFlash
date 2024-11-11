@@ -15,7 +15,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Arflash",
+  title: "Arflash || Flashing Processes🚀",
   description:
     "Decentralised flashloan protocol built on Arweave Aos contracts",
 };
