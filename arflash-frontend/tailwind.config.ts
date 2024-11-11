@@ -10,8 +10,8 @@ export default {
   theme: {
   	extend: {
   		colors: {
-  			background: 'hsl(var(--background))',
-  			foreground: 'hsl(var(--foreground))',
+  			background: '#FFFFFF',
+  			foreground: '#1E3A8A', // blue-800
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'
@@ -21,20 +21,20 @@ export default {
   				foreground: 'hsl(var(--popover-foreground))'
   			},
   			primary: {
-  				DEFAULT: 'hsl(var(--primary))',
-  				foreground: 'hsl(var(--primary-foreground))'
+  				DEFAULT: '#3B82F6', // blue-500
+  				foreground: '#FFFFFF',
   			},
   			secondary: {
-  				DEFAULT: 'hsl(var(--secondary))',
-  				foreground: 'hsl(var(--secondary-foreground))'
+  				DEFAULT: '#DBEAFE', // blue-100
+  				foreground: '#1E40AF', // blue-800
   			},
   			muted: {
-  				DEFAULT: 'hsl(var(--muted))',
-  				foreground: 'hsl(var(--muted-foreground))'
+  				DEFAULT: '#EFF6FF', // blue-50
+  				foreground: '#1E3A8A', // blue-800
   			},
   			accent: {
-  				DEFAULT: 'hsl(var(--accent))',
-  				foreground: 'hsl(var(--accent-foreground))'
+  				DEFAULT: '#BFDBFE', // blue-200
+  				foreground: '#1E3A8A', // blue-800
   			},
   			destructive: {
   				DEFAULT: 'hsl(var(--destructive))',
