@@ -14,8 +14,6 @@ import {
   Github,
   Shield,
   Droplets,
-  Gauge,
-  BarChart2,
   Code,
   BookOpen,
   ArrowUpRight,
