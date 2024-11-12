@@ -1,61 +1,58 @@
-# Flash Loan Protocol on Arweave
+# Arflash: Flash Loan Protocol on Arweave
 
-Arflash is 
-a decentralized flash loan protocol built on the Arweave blockchain. Our protocol leverages the unique features of Arweave to provide secure, transparent, and permanent financial transactions without any collateral.
+Arflash is a state-of-the-art decentralized flash loan protocol built on the Arweave blockchain, utilizing its actor-oriented smart contracts. By leveraging Arweave's hyper-parallelized contract capabilities, Arflash provides secure, transparent, and permanent financial transactions without requiring collateral, all within a single transaction.
 
+## Protocol Blueprint
 
-**Blueprint For the protocol**
+![Protocol Diagram](./Assets/image.png)
 
-![alt text](./Assets/image.png)
+[Explore the Diagram](https://excalidraw.com/#room=87d6fe615f69235eef84,pPqvjaqty2HC5ZDZo4V2-g)
 
-Figure it out on your own | [Link](https://excalidraw.com/#room=87d6fe615f69235eef84,pPqvjaqty2HC5ZDZo4V2-g)
+## Understanding Flash Loans
 
+Flash loans are a form of uncollateralized lending that allows users to borrow and repay funds within a single transaction. This innovative tool is primarily used for:
 
+- **Arbitrage**: Exploiting price differences across exchanges.
+- **Collateral Swapping**: Adjusting collateral to optimize yield or reduce risk.
+- **Self-Liquidation**: Preventing liquidation penalties by settling loans with other loans.
 
-## Flash Loan what are those?
+## Use Cases
 
-A flash loan is a type of uncollateralized lending that allows users to borrow and repay a loan within a single transaction. This innovative financial tool is primarily used for arbitrage, collateral swapping, or self-liquidation of positions in DeFi applications.
+### For Novices
 
+Flash loans can simplify digital finance for beginners:
 
-## Use-Cases For Novice
+- **Trading**: Execute buy and sell operations for profit in one transaction.
+- **Asset Swapping**: Exchange digital assets without losing value.
+- **Error Correction**: Quickly rectify mistakes in digital transactions.
 
-Flash loans might sound complicated, but they can be really cool and useful! Here are some simple ways you can use them:
+### For Professionals
 
-- **Trading**: Imagine you can buy something cheap and sell it for more money, all in one go. Flash loans help you do that quickly!
-- **Swapping**: If you have one type of digital money but need another, flash loans can help you swap them without losing any value.
-- **Fixing Mistakes**: Sometimes, people make mistakes with their digital money. Flash loans can help fix those mistakes fast.
+Experienced traders can leverage flash loans for sophisticated strategies:
 
-Flash loans are like magic tools in the world of digital money, making things easier and faster for everyone!
+- **Arbitrage**: Capitalize on price discrepancies across multiple platforms.
+- **Collateral Swapping**: Enhance yield or mitigate risk by exchanging collateral.
+- **Self-Liquidation**: Avoid penalties by settling loans with other loans.
+- **Debt Refinancing**: Benefit from improved interest rates or terms.
+- **Yield Farming**: Optimize returns by reallocating assets across DeFi protocols.
 
-### Use cases for Pero
+## Why Choose Arweave?
 
-Experienced traders can leverage flash loans for more advanced strategies:
+Arweave offers a unique blockchain solution with sustainable and perpetual data storage. By building on Arweave, Arflash ensures that all transactions are immutable and permanently accessible, providing unparalleled security and transparency for financial operations.
 
-- **Arbitrage**: Take advantage of price differences across multiple exchanges to make a profit.
-- **Collateral Swapping**: Quickly swap collateral in lending protocols to optimize yield or reduce risk.
-- **Self-Liquidation**: Pay off a loan with another loan to avoid liquidation penalties.
-- **Debt Refinancing**: Refinance existing debt to take advantage of better interest rates or terms.
-- **Yield Farming**: Maximize returns by moving assets between different DeFi protocols to capture the best yields.
+## Key Features
 
-Flash loans provide experienced traders with powerful tools to enhance their trading strategies and optimize their financial operations.
+- **Instant Loans**: Borrow as needed, with repayment by the transaction's end.
+- **No Collateral Required**: Access loans without asset lock-up.
+- **Decentralized**: Operate in a fully decentralized environment, free from intermediaries.
+- **Permanent Records**: All transactions are permanently stored on the Arweave network.
 
+## Getting Started with Arflash
 
+To begin using Arflash, visit [Arflash App](https://arflash.vercel.app).
 
-## But why Arweave?
+For more detailed instructions, please refer to the [documentation](https://calc1f4r.gitbook.io/arflash).
 
-Arweave is not just another blockchain; it's a new type of storage that backs data with sustainable and perpetual endowments, allowing users and developers to truly store data forever. By building our flash loan protocol on Arweave, we ensure that all transactions are immutable and permanently accessible, providing unmatched security and transparency for financial operations.
+---
 
-## Features of Our Protocol
-
-- **Instant Loans**: Borrow as much as you need, as long as you pay it back by the end of the transaction.
-- **No Collateral**: No need to lock up valuable assets as collateral.
-- **Decentralized**: Operate in a fully decentralized environment without intermediaries.
-- **Permanent Records**: Every transaction is permanently stored on the Arweave network, ensuring full traceability and auditability.
-
-
-
-## Contribute
-
-We are open to contributions! If you are a developer interested in decentralized finance and permanent data storage, join us in building the most robust flash loan protocol on the blockchain. Check out our repository and contribute to the future of DeFi on Arweave.
-
-Thank you for your interest in our project. Let's build the future of finance together!
+By following these steps, you can leverage the power of Arflash to enhance your financial operations on the Arweave blockchain.
