@@ -23,7 +23,8 @@ Handlers.add('info', Handlers.utils.hasMatchingTag('Action', 'Info'), function(m
   })
 end)
 
-
+Handlers.add('balances', Handlers.utils.hasMatchingTag('Action', 'Balances'),
+             function(msg) ao.send({ Target = msg.From, Data = json.encode(Balances) }) end)
 
 
 Handlers.add('balance', Handlers.utils.hasMatchingTag('Action', 'Balance'), function(msg)
@@ -36,14 +37,12 @@ Handlers.add('balance', Handlers.utils.hasMatchingTag('Action', 'Balance'), func
     bal = tostring(Balances[msg.From])
   end
 
+  local targetAccount = msg.Tags.Target or msg.From
+
   ao.send({
     Target = msg.From,
-    Tags = { Target = msg.From, Balance = bal, Ticker = Ticker, Data = json.encode(tonumber(bal)) }
+    Tags = { Target = targetAccount, Balance = bal, Ticker = Ticker, Data = json.encode(tonumber(bal)) }
   })
-end)
-
-Handlers.add('balances', Handlers.utils.hasMatchingTag('Action', 'Balances'), function(msg)
-  ao.send({ Target = msg.From, Data = json.encode(Balances) })
 end)
 
 Handlers.add('transfer', Handlers.utils.hasMatchingTag('Action', 'Transfer'), function(msg)
@@ -61,8 +60,10 @@ Handlers.add('transfer', Handlers.utils.hasMatchingTag('Action', 'Transfer'), fu
     Balances[msg.From] = Balances[msg.From] - qty
     Balances[msg.Tags.Recipient] = Balances[msg.Tags.Recipient] + qty
 
-    -- Only Send the notifications to the Sender and Recipient
-    -- if the Cast tag is not set on the Transfer message
+    --[[
+      Only Send the notifications to the Sender and Recipient
+      if the Cast tag is not set on the Transfer message
+    ]] --
     if not msg.Tags.Cast then
       -- Debit-Notice message template, that is sent to the Sender of the transfer
       local debitNotice = {
@@ -140,71 +141,108 @@ Handlers.add('transferFrom', Handlers.utils.hasMatchingTag('Action', 'TransferFr
   assert(type(msg.Tags.Recipient) == 'string', 'Recipient is required!')
   assert(type(msg.Tags.Quantity) == 'string', 'Quantity is required!')
 
-  if not Balances[msg.Tags.Owner] then Balances[msg.Tags.Owner] = 0 end
-  if not Balances[msg.Tags.Recipient] then Balances[msg.Tags.Recipient] = 0 end
-  if not Allowances[msg.Tags.Owner] then Allowances[msg.Tags.Owner] = {} end
-
+  local owner = msg.Tags.Owner
+  local recipient = msg.Tags.Recipient
   local qty = tonumber(msg.Tags.Quantity)
-  assert(type(qty) == 'number', 'qty must be number')
+  assert(type(qty) == 'number', 'Quantity must be a number')
 
-  local allowance = Allowances[msg.Tags.Owner][msg.From] or 0
+  if not Balances[owner] then Balances[owner] = 0 end
+  if not Balances[recipient] then Balances[recipient] = 0 end
+  if not Allowances[owner] then Allowances[owner] = {} end
+
+  local allowance = Allowances[owner][msg.From] or 0
   assert(allowance >= qty, 'Allowance exceeded')
 
-  if Balances[msg.Tags.Owner] >= qty then
-    Balances[msg.Tags.Owner] = Balances[msg.Tags.Owner] - qty
-    Balances[msg.Tags.Recipient] = Balances[msg.Tags.Recipient] + qty
-    Allowances[msg.Tags.Owner][msg.From] = allowance - qty
+  if Balances[owner] >= qty then
+    Balances[owner] = Balances[owner] - qty
+    Balances[recipient] = Balances[recipient] + qty
+    Allowances[owner][msg.From] = allowance - qty
 
+    -- Send notifications
     ao.send({
       Target = msg.From,
-      Tags = { Action = 'TransferFrom-Notice', Owner = msg.Tags.Owner, Recipient = msg.Tags.Recipient, Quantity = tostring(qty) }
+      Tags = {
+        Action = 'TransferFrom-Notice',
+        Owner = owner,
+        Recipient = recipient,
+        Quantity = tostring(qty)
+      }
+    })
+    ao.send({
+      Target = owner,
+      Action = 'Debit-Notice',
+      Tags = {
+        Recipient = recipient,
+        Quantity = tostring(qty),
+        Data = "Your tokens were transferred to " .. recipient
+      }
+    })
+    ao.send({
+      Target = recipient,
+      Action = 'Credit-Notice',
+      Tags = {
+        Sender = owner,
+        Quantity = tostring(qty),
+        Data = "You received tokens from " .. owner
+      }
     })
   else
     ao.send({
       Target = msg.From,
-      Tags = { Action = 'TransferFrom-Error', ['Message-Id'] = msg.Id, Error = 'Insufficient Balance!' }
+      Tags = {
+        Action = 'TransferFrom-Error',
+        ['Message-Id'] = msg.Id,
+        Error = 'Insufficient Balance!'
+      }
     })
   end
 end)
 
-Handlers.add('mint', Handlers.utils.hasMatchingTag('Action', 'Mint'), function(msg, env)
+Handlers.add('mint', Handlers.utils.hasMatchingTag('Action', 'Mint'), function(msg)
   assert(type(msg.Tags.Quantity) == 'string', 'Quantity is required!')
+  local qty = tonumber(msg.Tags.Quantity)
+  assert(type(qty) == 'number', 'qty must be number')
 
   if msg.From == env.Process.Id then
     -- Add tokens to the token pool, according to Quantity
-    local qty = tonumber(msg.Tags.Quantity)
-    Balances[env.Process.Id] = Balances[env.Process.Id] + qty
+    Balances[msg.From] = Balances[msg.From] + qty
+    ao.send({
+      Target = msg.From,
+      Tags = { Action = 'Mint-Notice', Quantity = tostring(qty), Balance = tostring(Balances[msg.From]) }
+    })
   else
     ao.send({
-      Target = msg.Tags.From,
-      Tags = {
-        Action = 'Mint-Error',
-        ['Message-Id'] = msg.Id,
-        Error = 'Only the Process Owner can mint new ' .. Ticker .. ' tokens!'
-      }
+      Target = msg.From,
+      Tags = { Action = 'Mint-Error', ['Message-Id'] = msg.Id, Error = 'Unauthorized minting attempt!' }
     })
   end
 end)
 
 Handlers.add('burn', Handlers.utils.hasMatchingTag('Action', 'Burn'), function(msg)
   assert(type(msg.Tags.Quantity) == 'string', 'Quantity is required!')
-
-  if not Balances[msg.From] then Balances[msg.From] = 0 end
-
   local qty = tonumber(msg.Tags.Quantity)
   assert(type(qty) == 'number', 'qty must be number')
 
-  if Balances[msg.From] >= qty then
-    Balances[msg.From] = Balances[msg.From] - qty
+  if msg.From == env.Process.Id then
+    if not Balances[msg.From] then Balances[msg.From] = 0 end
 
-    ao.send({
-      Target = msg.From,
-      Tags = { Action = 'Burn-Notice', Quantity = tostring(qty), Balance = tostring(Balances[msg.From]) }
-    })
+    if Balances[msg.From] >= qty then
+      Balances[msg.From] = Balances[msg.From] - qty
+
+      ao.send({
+        Target = msg.From,
+        Tags = { Action = 'Burn-Notice', Quantity = tostring(qty), Balance = tostring(Balances[msg.From]) }
+      })
+    else
+      ao.send({
+        Target = msg.From,
+        Tags = { Action = 'Burn-Error', ['Message-Id'] = msg.Id, Error = 'Insufficient Balance!' }
+      })
+    end
   else
     ao.send({
       Target = msg.From,
-      Tags = { Action = 'Burn-Error', ['Message-Id'] = msg.Id, Error = 'Insufficient Balance!' }
+      Tags = { Action = 'Burn-Error', ['Message-Id'] = msg.Id, Error = 'Unauthorized burning attempt!' }
     })
   end
 end)
