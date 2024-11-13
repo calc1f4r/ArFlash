@@ -8,7 +8,7 @@ function ContactUsPage() {
       <div className="max-w-3xl w-full">
         <h2 className="text-3xl font-bold mb-4 text-blue-900">Contact Us</h2>
         <p className="text-zinc-900 mb-6">
-          We'd love to hear from you! Please fill out the form below or reach out to us at <a href="mailto:contact@arflashprotocol.com" className="text-blue-600">contact@arflashprotocol.com</a>.
+          We'd love to hear from you! Please fill out the form below or reach out to us at <a href="mailto:contact@arflashprotocol.com" className="text-blue-600">calcifer_xoxo@protonmail.com</a>.
         </p>
         <form>
           {/* Name Field */}

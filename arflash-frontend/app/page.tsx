@@ -33,6 +33,10 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import Image from "next/image";
+import totoroImage from "@/public/totoro.png"; // Ensure the path is correct and the image exists
+import { Player } from "@lottiefiles/react-lottie-player"; // Install this package
+import catAnimation from "@/public/catanimation.json"; // Lottie file for cat animation
+// import catAnimation from "@/public/catAnimation.json"
 
 // Mock data for the chart
 const data = [
@@ -95,33 +99,40 @@ function LandingPageComponent() {
     },
   };
 
+  // Function to play sound effects
+  const playSound = (soundFile: string) => {
+    const audio = new Audio(soundFile);
+    audio.play();
+  };
+
   return (
-    <div className="min-h-screen bg-white text-black font-anime overflow-hidden">
-      {/* Hero Section */}
+    <div className="min-h-screen bg-gray-50 text-gray-800 font-anime overflow-hidden">
+      {/* Updated Hero Section with linear gradient background */}
       <motion.section
-        className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 to-white"
-        style={{ opacity, scale, background: "linear-gradient(to bottom, #b3e5fc, #ffffff)" }}>
-        <motion.div
-          className="absolute inset-0 z-0"
-          animate={{
-            background: [
-              "linear-gradient(120deg, #F9FAFB, #FFFFFF)",
-              "linear-gradient(120deg, #F3F4F6, #FAFAFA)",
-              "linear-gradient(120deg, #F1F5F9, #FFFFFF)",
-            ],
-          }}
-          transition={{ duration: 20, repeat: Infinity, repeatType: "reverse" }}
-        />
+        className="relative min-h-screen flex items-center justify-center overflow-hidden"
+        style={{
+          opacity,
+          scale,
+          background: "linear-gradient(135deg, #89CFF0 0%, #FFFFFF 100%)",
+        }}>
         <div className="relative z-10 text-center max-w-5xl px-4 sm:px-6 lg:px-8">
           <motion.h1
-            className="text-5xl sm:text-6xl lg:text-7xl font-extrabold mb-6 bg-gradient-to-r from-blue-400 to-blue-700 bg-clip-text text-transparent"
+            className="text-5xl sm:text-6xl lg:text-7xl font-extrabold mb-6 text-transparent bg-clip-text"
+            style={{
+              backgroundImage:
+                "linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              textShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
+            }}
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, type: "spring", stiffness: 100 }}>
-            Infinite Liquidity. Lightning Speed.
+            Infinite Liquidity <br />
+            Lightning Speed
           </motion.h1>
           <motion.p
-            className="text-xl sm:text-2xl mb-8 text-zinc-900 max-w-3xl mx-auto"
+            className="text-xl sm:text-2xl mb-8 text-gray-700 max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
@@ -139,29 +150,24 @@ function LandingPageComponent() {
             transition={{ duration: 0.5, delay: 0.4 }}>
             <Button
               size="lg"
-              className="bg-gradient-to-r from-blue-400 to-blue-700 text-white text-lg px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-              onClick={() =>
-                (window.location.href = "https://calc1f4r.gitbook.io/arflash/")
-              }>
-              Start Your Flashloan <ArrowRight className="ml-2" />
+              className="bg-green-500 text-white text-lg px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+              onClick={() => {
+                playSound("/sounds/meow.mp3"); // Add meow sound effect on click
+                window.location.href = "https://calc1f4r.gitbook.io/arflash/";
+              }}>
+              Start Your Adventure <ArrowRight className="ml-2" />
             </Button>
           </motion.div>
         </div>
-        <motion.div
-          className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.8 }}
-        />
+        {/* Add Cat Animation */}
         {/* <motion.div
-          className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
+          className="absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-10"
           animate={floatingAnimation}>
-          <Image
-            src="/placeholder.svg?height=200&width=200"
-            alt="Floating cryptocurrency coins"
-            width={200}
-            height={200}
-            className="opacity-30"
+          <Player
+            autoplay
+            loop
+            src={catAnimation}
+            style={{ height: "200px", width: "200px" }}
           />
         </motion.div> */}
       </motion.section>
@@ -174,18 +180,22 @@ function LandingPageComponent() {
         transition={{ duration: 0.8 }}>
         <div className="max-w-4xl mx-auto text-center">
           <motion.h2
-            className="text-3xl sm:text-4xl font-bold mb-6 text-blue-900"
+            className="text-3xl sm:text-4xl font-bold mb-6 text-green-700"
             initial={{ opacity: 0, y: 20 }}
             animate={controls}
             custom={0}>
             About the Protocol
           </motion.h2>
           <motion.p
-            className="text-lg sm:text-xl text-zinc-900 mb-8"
+            className="text-lg sm:text-xl text-gray-800 mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={controls}
             custom={1}>
-             Our flash loan protocol on Arweave's AOS (Arweave Operating System) harnesses the power of hyperparallel computing to deliver instant liquidity with secure, verifiable transactions. Built for modern DeFi needs, it maximizes performance without sacrificing transparency or trust.
+            Our flash loan protocol on Arweave's AOS (Arweave Operating System)
+            harnesses the power of hyperparallel computing to deliver instant
+            liquidity with secure, verifiable transactions. Built for modern
+            DeFi needs, it maximizes performance without sacrificing
+            transparency or trust.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
@@ -204,11 +214,11 @@ function LandingPageComponent() {
 
       {/* Key Features */}
       <motion.section
-        className="py-20 px-4 bg-blue-50"
+        className="py-20 px-4 bg-green-50"
         variants={staggerContainer}
         initial="hidden"
         animate="show">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 text-blue-900 bg-gradient-to-r from-blue-200 to-blue-900 bg-clip-text text-transparent">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 text-green-700">
           Key Features
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
@@ -243,16 +253,16 @@ function LandingPageComponent() {
               variants={cardVariants}
               initial="hidden"
               animate="visible">
-              <Card className="bg-white p-6 shadow-md hover:shadow-lg transition-all duration-300 border-2 border-blue-300 h-full transform hover:scale-105">
+              <Card className="bg-white p-6 shadow-md hover:shadow-lg transition-all duration-300 border-2 border-green-300 h-full transform hover:scale-105">
                 <motion.div
                   whileHover={{ rotate: 360 }}
                   transition={{ duration: 0.5 }}>
-                  <feature.icon className="w-12 h-12 mb-4 text-blue-700" />
+                  <feature.icon className="w-12 h-12 mb-4 text-green-700" />
                 </motion.div>
-                <h3 className="text-xl font-semibold mb-2 text-blue-900">
+                <h3 className="text-xl font-semibold mb-2 text-green-900">
                   {feature.title}
                 </h3>
-                <p className="text-zinc-900">{feature.description}</p>
+                <p className="text-gray-800">{feature.description}</p>
               </Card>
             </motion.div>
           ))}
@@ -265,11 +275,11 @@ function LandingPageComponent() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}>
-        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 text-blue-900">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 text-green-700">
           How It Works
         </h2>
         <div className="max-w-4xl mx-auto">
-          <ol className="relative border-l border-blue-200">
+          <ol className="relative border-l border-green-200">
             {[
               {
                 title: "Step 1: Initiate the Loan Request",
@@ -299,15 +309,15 @@ function LandingPageComponent() {
                 animate={controls}
                 custom={index}>
                 <motion.span
-                  className="absolute flex items-center justify-center w-8 h-8 bg-blue-900 rounded-full -left-8 ring-4 ring-white text-white"
+                  className="absolute flex items-center justify-center w-8 h-8 bg-green-900 rounded-full -left-8 ring-4 ring-white text-white"
                   whileHover={{ scale: 1.2 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}>
                   {index + 1}
                 </motion.span>
-                <h3 className="ml-3 font-semibold text-xl mb-1 text-blue-900 mt-2">
+                <h3 className="ml-3 font-semibold text-xl mb-1 text-green-900 mt-2">
                   {step.title}
                 </h3>
-                <p className="text-zinc-900">{step.description}</p>
+                <p className="text-gray-800">{step.description}</p>
               </motion.li>
             ))}
           </ol>
@@ -322,18 +332,18 @@ function LandingPageComponent() {
             alt="Flashloan process diagram"
             width={800}
             height={400}
-            className="rounded-lg border-4 border-blue-100 shadow-lg mx-auto transition-transform duration-300 transform hover:scale-105 hover:shadow-xl"
+            className="rounded-lg border-4 border-green-100 shadow-lg mx-auto transition-transform duration-300 transform hover:scale-105 hover:shadow-xl"
           />
         </motion.div>
       </motion.section>
 
       {/* Use Cases & Applications */}
       <motion.section
-        className="py-20 px-4 bg-blue-50"
+        className="py-20 px-4 bg-green-50"
         variants={staggerContainer}
         initial="hidden"
         animate="show">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 text-blue-900">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 text-green-700">
           Use Cases & Applications
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
@@ -368,11 +378,11 @@ function LandingPageComponent() {
               variants={cardVariants}
               initial="hidden"
               animate="visible">
-              <Card className="bg-white p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-blue-100 h-full transform hover:scale-105">
-                <h3 className="text-xl font-semibold mb-2 text-blue-900">
+              <Card className="bg-white p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-green-100 h-full transform hover:scale-105">
+                <h3 className="text-xl font-semibold mb-2 text-green-900">
                   {useCase.title}
                 </h3>
-                <p className="text-zinc-900 mb-4">{useCase.description}</p>
+                <p className="text-gray-800 mb-4">{useCase.description}</p>
                 <Button
                   variant="outline"
                   className="mt-auto group"
@@ -395,11 +405,11 @@ function LandingPageComponent() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}>
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8 text-blue-900">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8 text-green-700">
             Security and Trust
           </h2>
           <motion.p
-            className="text-lg sm:text-xl text-zinc-900 mb-8"
+            className="text-lg sm:text-xl text-gray-800 mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={controls}>
             Security is at the core of our protocol. With AOS's built-in
@@ -436,12 +446,12 @@ function LandingPageComponent() {
               },
             ].map((feature, index) => (
               <motion.div key={index} variants={cardVariants}>
-                <Card className="bg-blue-50 p-4 shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
-                  <feature.icon className="w-8 h-8 mb-2 text-blue-700" />
-                  <h3 className="text-lg font-semibold mb-2 text-blue-900">
+                <Card className="bg-green-50 p-4 shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                  <feature.icon className="w-8 h-8 mb-2 text-green-700" />
+                  <h3 className="text-lg font-semibold mb-2 text-green-900">
                     {feature.title}
                   </h3>
-                  <p className="text-sm text-zinc-900">{feature.description}</p>
+                  <p className="text-sm text-gray-800">{feature.description}</p>
                 </Card>
               </motion.div>
             ))}
@@ -451,17 +461,17 @@ function LandingPageComponent() {
 
       {/* Analytics & Real-Time Data */}
       <motion.section
-        className="py-20 px-4 bg-blue-50"
+        className="py-20 px-4 bg-green-50"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}>
-        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 text-blue-900">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 text-green-700">
           Analytics & Real-Time Data
         </h2>
         <div className="max-w-5xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={controls}>
             <Card className="bg-white p-6 shadow-lg">
-              <h3 className="text-xl font-semibold mb-4 text-blue-900">
+              <h3 className="text-xl font-semibold mb-4 text-green-900">
                 Transaction Volume
               </h3>
               <ResponsiveContainer width="100%" height={300}>
@@ -490,11 +500,11 @@ function LandingPageComponent() {
 
       {/* Documentation and Developer Resources */}
       <motion.section
-        className="py-20 px-4 bg-gradient-to-br from-blue-50 to-white"
+        className="py-20 px-4 bg-gradient-to-br from-green-100 to-white"
         variants={staggerContainer}
         initial="hidden"
         animate="show">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 text-blue-900">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 text-green-700">
           Documentation and Developer Resources
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -531,11 +541,11 @@ function LandingPageComponent() {
                 whileHover={{ scale: 1.05, rotate: 2 }}
                 transition={{ type: "spring", stiffness: 300 }}>
                 <Card className="bg-white p-6 shadow-lg hover:shadow-xl transition-all duration-300 h-full flex flex-col transform hover:scale-105">
-                  <IconComponent className="w-12 h-12 mb-4 text-blue-700" />
-                  <h3 className="text-xl font-semibold mb-2 text-blue-900">
+                  <IconComponent className="w-12 h-12 mb-4 text-green-700" />
+                  <h3 className="text-xl font-semibold mb-2 text-green-900">
                     {resource.title}
                   </h3>
-                  <p className="text-zinc-900 mb-4 flex-grow">
+                  <p className="text-gray-800 mb-4 flex-grow">
                     {resource.description}
                   </p>
                   <Button
@@ -560,11 +570,11 @@ function LandingPageComponent() {
 
       {/* FAQ Section */}
       <motion.section
-        className="py-20 px-4 bg-blue-50"
+        className="py-20 px-4 bg-green-50"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}>
-        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 text-blue-900">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 text-green-700">
           Frequently Asked Questions
         </h2>
         <div className="max-w-3xl mx-auto">
@@ -608,18 +618,18 @@ function LandingPageComponent() {
           ].map((faq, index) => (
             <motion.div
               key={index}
-              className="mb-6 border-b border-blue-200 pb-4"
+              className="mb-6 border-b border-green-200 pb-4"
               initial={{ opacity: 0, y: 20 }}
               animate={controls}
               custom={index}>
               <button
-                className="flex justify-between items-center w-full text-left font-semibold text-lg mb-2 text-blue-900"
+                className="flex justify-between items-center w-full text-left font-semibold text-lg mb-2 text-green-900"
                 onClick={() => setIsOpen(isOpen === index ? null : index)}>
                 {faq.question}
                 <motion.div
                   animate={{ rotate: isOpen === index ? 180 : 0 }}
                   transition={{ duration: 0.3 }}>
-                  <ChevronDown className="text-zinc-900" />
+                  <ChevronDown className="text-gray-800" />
                 </motion.div>
               </button>
               <AnimatePresence>
@@ -630,7 +640,7 @@ function LandingPageComponent() {
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.3 }}
                     className="overflow-hidden">
-                    <p className="text-zinc-900 pl-4">{faq.answer}</p>
+                    <p className="text-gray-800 pl-4">{faq.answer}</p>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -639,25 +649,25 @@ function LandingPageComponent() {
         </div>
       </motion.section>
 
-      <footer className="bg-white py-8 px-4 border-t border-blue-200">
+      <footer className="bg-white py-8 px-4 border-t border-green-200">
         <div className="max-w-6xl mx-auto flex flex-wrap justify-between items-center">
-          <div className="text-zinc-900 mb-4 md:mb-0">
+          <div className="text-gray-800 mb-4 md:mb-0">
             © 2024 Arflash Protocol. All rights reserved.
           </div>
           <nav className="flex space-x-4">
             <a
               href="/about"
-              className="text-zinc-900 hover:text-blue-900 transition-colors">
+              className="text-gray-800 hover:text-green-700 transition-colors">
               About Us
             </a>
             <a
               href="#"
-              className="text-zinc-900 hover:text-blue-900 transition-colors">
+              className="text-gray-800 hover:text-green-700 transition-colors">
               Contact
             </a>
             <a
               href="#"
-              className="text-zinc-900 hover:text-blue-900 transition-colors">
+              className="text-gray-800 hover:text-green-700 transition-colors">
               Privacy Policy
             </a>
           </nav>
@@ -665,7 +675,7 @@ function LandingPageComponent() {
             href="https://github.com/calc1f4r/ArFlash"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-zinc-900 hover:text-blue-900 transition-colors">
+            className="text-gray-800 hover:text-green-700 transition-colors">
             <Github className="w-6 h-6" />
           </a>
         </div>
