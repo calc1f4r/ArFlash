@@ -1,21 +1,22 @@
 local json = require('json')
 
+-- Initialize Balances and Allowances tables if they don't exist
 if not Balances then Balances = {} end
 if not Allowances then Allowances = {} end
 
+-- Set token name if not already set
 if Name ~= 'TOKENNAME' then Name = 'TOKENNAME' end
 
-
--- Symbol
+-- Set token symbol if not already set
 if Ticker ~= 'COIN' then Ticker = 'COIN' end
 
--- The number of the token that should be treated as a single unit when quantities and balances are displayed to users.	
+-- Set token denomination if not already set
 if Denomination ~= 10 then Denomination = 10 end
 
-
--- lOGO link
+-- Set token logo if not already set
 if not Logo then Logo = '' end
 
+-- Handler for 'info' action
 Handlers.add('info', Handlers.utils.hasMatchingTag('Action', 'Info'), function(msg)
   ao.send({
     Target = msg.From,
@@ -23,14 +24,16 @@ Handlers.add('info', Handlers.utils.hasMatchingTag('Action', 'Info'), function(m
   })
 end)
 
-Handlers.add('balances', Handlers.utils.hasMatchingTag('Action', 'Balances'),
-             function(msg) ao.send({ Target = msg.From, Data = json.encode(Balances) }) end)
+-- Handler for 'balances' action
+Handlers.add('balances', Handlers.utils.hasMatchingTag('Action', 'Balances'), function(msg)
+  ao.send({ Target = msg.From, Data = json.encode(Balances) })
+end)
 
-
+-- Handler for 'balance' action
 Handlers.add('balance', Handlers.utils.hasMatchingTag('Action', 'Balance'), function(msg)
   local bal = '0'
 
-  -- If not Target is provided, then return the Senders balance
+  -- If Target is provided, return the Target's balance, otherwise return the Sender's balance
   if (msg.Tags.Target and Balances[msg.Tags.Target]) then
     bal = tostring(Balances[msg.Tags.Target])
   elseif Balances[msg.From] then
@@ -45,12 +48,12 @@ Handlers.add('balance', Handlers.utils.hasMatchingTag('Action', 'Balance'), func
   })
 end)
 
+-- Handler for 'transfer' action
 Handlers.add('transfer', Handlers.utils.hasMatchingTag('Action', 'Transfer'), function(msg)
   assert(type(msg.Tags.Recipient) == 'string', 'Recipient is required!')
   assert(type(msg.Tags.Quantity) == 'string', 'Quantity is required!')
 
   if not Balances[msg.From] then Balances[msg.From] = 0 end
-
   if not Balances[msg.Tags.Recipient] then Balances[msg.Tags.Recipient] = 0 end
 
   local qty = tonumber(msg.Tags.Quantity)
@@ -60,12 +63,9 @@ Handlers.add('transfer', Handlers.utils.hasMatchingTag('Action', 'Transfer'), fu
     Balances[msg.From] = Balances[msg.From] - qty
     Balances[msg.Tags.Recipient] = Balances[msg.Tags.Recipient] + qty
 
-    --[[
-      Only Send the notifications to the Sender and Recipient
-      if the Cast tag is not set on the Transfer message
-    ]] --
+    -- Only send notifications if the Cast tag is not set
     if not msg.Tags.Cast then
-      -- Debit-Notice message template, that is sent to the Sender of the transfer
+      -- Debit-Notice message template
       local debitNotice = {
         Target = msg.From,
         Action = 'Debit-Notice',
@@ -75,7 +75,7 @@ Handlers.add('transfer', Handlers.utils.hasMatchingTag('Action', 'Transfer'), fu
             "You transferred " ..
             Colors.blue .. msg.Quantity .. Colors.gray .. " to " .. Colors.green .. msg.Recipient .. Colors.reset
       }
-      -- Credit-Notice message template, that is sent to the Recipient of the transfer
+      -- Credit-Notice message template
       local creditNotice = {
         Target = msg.Recipient,
         Action = 'Credit-Notice',
@@ -88,7 +88,6 @@ Handlers.add('transfer', Handlers.utils.hasMatchingTag('Action', 'Transfer'), fu
 
       -- Add forwarded tags to the credit and debit notice messages
       for tagName, tagValue in pairs(msg) do
-        -- Tags beginning with "X-" are forwarded
         if string.sub(tagName, 1, 2) == "X-" then
           debitNotice[tagName] = tagValue
           creditNotice[tagName] = tagValue
@@ -107,6 +106,7 @@ Handlers.add('transfer', Handlers.utils.hasMatchingTag('Action', 'Transfer'), fu
   end
 end)
 
+-- Handler for 'allowance' action
 Handlers.add('allowance', Handlers.utils.hasMatchingTag('Action', 'Allowance'), function(msg)
   local allowance = '0'
   if Allowances[msg.From] and Allowances[msg.From][msg.Tags.Spender] then
@@ -119,6 +119,7 @@ Handlers.add('allowance', Handlers.utils.hasMatchingTag('Action', 'Allowance'), 
   })
 end)
 
+-- Handler for 'approve' action
 Handlers.add('approve', Handlers.utils.hasMatchingTag('Action', 'Approve'), function(msg)
   assert(type(msg.Tags.Spender) == 'string', 'Spender is required!')
   assert(type(msg.Tags.Quantity) == 'string', 'Quantity is required!')
@@ -136,68 +137,71 @@ Handlers.add('approve', Handlers.utils.hasMatchingTag('Action', 'Approve'), func
   })
 end)
 
+-- Handler for 'transferFrom' action
 Handlers.add('transferFrom', Handlers.utils.hasMatchingTag('Action', 'TransferFrom'), function(msg)
-  assert(type(msg.Tags.Owner) == 'string', 'Owner is required!')
-  assert(type(msg.Tags.Recipient) == 'string', 'Recipient is required!')
+  -- Debug prints and input validation
+  print("In transferFrom")
+  print(msg.Tags.from)
+  print(msg.Tags.to)
+  print(msg.Tags.Quantity)
+  assert(type(msg.Tags.from) == 'string', 'From is required!')
+  assert(type(msg.Tags.to) == 'string', 'To is required!')
   assert(type(msg.Tags.Quantity) == 'string', 'Quantity is required!')
 
-  local owner = msg.Tags.Owner
-  local recipient = msg.Tags.Recipient
+  -- Convert quantity to number
+  local from = msg.Tags.from
+  local to = msg.Tags.to
   local qty = tonumber(msg.Tags.Quantity)
-  assert(type(qty) == 'number', 'Quantity must be a number')
+  assert(qty ~= nil, 'Quantity must be a valid number!')
+  assert(qty > 0, 'Quantity must be greater than zero!')
 
-  if not Balances[owner] then Balances[owner] = 0 end
-  if not Balances[recipient] then Balances[recipient] = 0 end
-  if not Allowances[owner] then Allowances[owner] = {} end
+  -- Ensure balances and allowances tables exist
+  if not Balances[from] then Balances[from] = 0 end
+  if not Balances[to] then Balances[to] = 0 end
+  if not Allowances[from] then Allowances[from] = {} end
 
-  local allowance = Allowances[owner][msg.From] or 0
-  assert(allowance >= qty, 'Allowance exceeded')
+  -- Check allowance and balances
+  local allowance = Allowances[from][msg.From] or 0
+  print(tostring(allowance))
+  assert(allowance >= qty, 'Allowance exceeded!')
+  assert(Balances[from] >= qty, 'Insufficient Balance!')
 
-  if Balances[owner] >= qty then
-    Balances[owner] = Balances[owner] - qty
-    Balances[recipient] = Balances[recipient] + qty
-    Allowances[owner][msg.From] = allowance - qty
+  -- Perform transfer
+  Balances[from] = Balances[from] - qty
+  Balances[to] = Balances[to] + qty
+  Allowances[from][msg.From] = allowance - qty
 
-    -- Send notifications
-    ao.send({
-      Target = msg.From,
-      Tags = {
-        Action = 'TransferFrom-Notice',
-        Owner = owner,
-        Recipient = recipient,
-        Quantity = tostring(qty)
-      }
-    })
-    ao.send({
-      Target = owner,
+  -- Send success notifications
+  ao.send({
+    Target = msg.From,
+    Tags = {
+      Action = 'TransferFrom-Notice',
+      From = from,
+      To = to,
+      Quantity = tostring(qty)
+    }
+  })
+  ao.send({
+    Target = from,
+    Tags = {
       Action = 'Debit-Notice',
-      Tags = {
-        Recipient = recipient,
-        Quantity = tostring(qty),
-        Data = "Your tokens were transferred to " .. recipient
-      }
-    })
-    ao.send({
-      Target = recipient,
+      To = to,
+      Quantity = tostring(qty),
+      Data = "Your tokens were transferred to " .. to
+    }
+  })
+  ao.send({
+    Target = to,
+    Tags = {
       Action = 'Credit-Notice',
-      Tags = {
-        Sender = owner,
-        Quantity = tostring(qty),
-        Data = "You received tokens from " .. owner
-      }
-    })
-  else
-    ao.send({
-      Target = msg.From,
-      Tags = {
-        Action = 'TransferFrom-Error',
-        ['Message-Id'] = msg.Id,
-        Error = 'Insufficient Balance!'
-      }
-    })
-  end
+      From = from,
+      Quantity = tostring(qty),
+      Data = "You received tokens from " .. from
+    }
+  })
 end)
 
+-- Handler for 'mint' action
 Handlers.add('mint', Handlers.utils.hasMatchingTag('Action', 'Mint'), function(msg)
   assert(type(msg.Tags.Quantity) == 'string', 'Quantity is required!')
   local qty = tonumber(msg.Tags.Quantity)
@@ -218,6 +222,7 @@ Handlers.add('mint', Handlers.utils.hasMatchingTag('Action', 'Mint'), function(m
   end
 end)
 
+-- Handler for 'burn' action
 Handlers.add('burn', Handlers.utils.hasMatchingTag('Action', 'Burn'), function(msg)
   assert(type(msg.Tags.Quantity) == 'string', 'Quantity is required!')
   local qty = tonumber(msg.Tags.Quantity)
