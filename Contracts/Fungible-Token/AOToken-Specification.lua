@@ -157,7 +157,6 @@ Handlers.add('transferFrom', Handlers.utils.hasMatchingTag('Action', 'TransferFr
 
   -- Check allowance and balances
   local allowance = Allowances[from][msg.From] or 0
-  print(tostring(allowance))
   assert(allowance >= qty, 'Allowance exceeded!')
   assert(Balances[from] >= qty, 'Insufficient Balance!')
 
