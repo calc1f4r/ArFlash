@@ -139,11 +139,6 @@ end)
 
 -- Handler for 'transferFrom' action
 Handlers.add('transferFrom', Handlers.utils.hasMatchingTag('Action', 'TransferFrom'), function(msg)
-  -- Debug prints and input validation
-  print("In transferFrom")
-  print(msg.Tags.from)
-  print(msg.Tags.to)
-  print(msg.Tags.Quantity)
   assert(type(msg.Tags.from) == 'string', 'From is required!')
   assert(type(msg.Tags.to) == 'string', 'To is required!')
   assert(type(msg.Tags.Quantity) == 'string', 'Quantity is required!')
