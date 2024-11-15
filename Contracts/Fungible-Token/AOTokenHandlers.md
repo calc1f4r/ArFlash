@@ -176,8 +176,8 @@ Send({
   Target = ao.id,
   Tags = {
     Action = "TransferFrom",
-    From = "from_wallet_or_processid",
-    To = "to_wallet_or_processid",
+    from = "from_wallet_or_processid",
+    to = "to_wallet_or_processid",
     Quantity = "3000"
   }
 })
