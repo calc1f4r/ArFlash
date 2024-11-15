@@ -16,7 +16,7 @@ Retrieve general information about the token.
 
 ```lua
 Send({ Target = ao.id, Tags = { Action = "Info" } })
-```
+``` 
 
 **Response:**
 
@@ -183,9 +183,7 @@ Send({
 })
 ```
 
-```lua
-Send({Target = aotokenid, Tags = {Action = "TransferFrom", From = aotokenid, To = ao.id, Quantity = "30"}})
-```
+
 
 **Note:** The `msg.From` must have an allowance set by the `From` account to transfer tokens on their behalf. The `From` account should use the `Approve` function to set the allowance.
 
