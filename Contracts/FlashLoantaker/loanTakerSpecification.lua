@@ -1,12 +1,11 @@
 Handlers.add('onloanrecieved', Handlers.utils.hasMatchingTag('Action', 'LoanReceived'), function(msg)
     local quantity = tonumber(msg.Tags.Quantity)
     local tokenProcessId = msg.Tags.TokenProcessId -- Get TokenProcessId from message tags
-    local feePercentage = tonumber(msg.Tags.Fee) -- Get Fee percentage from message tags
+    local feeAmount = tonumber(msg.Tags.Fee) -- Get Fee percentage from message tags
     assert(type(quantity) == 'number', 'Quantity must be a number')
     assert(type(tokenProcessId) == 'string', 'TokenProcessId must be a string')
-    assert(type(feePercentage) == 'number', 'Fee must be a number')
+    assert(type(feeAmount) == 'number', 'Fee must be a number')
 
-    local feeAmount = quantity * feePercentage / 100
     local totalApprove = quantity + feeAmount
 
     -- Transfer tokens from msg.From to this contract using TransferFrom
