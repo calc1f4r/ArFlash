@@ -1,11 +1,4 @@
-import {
-  Zap,
-  Shield,
-  Cpu,
-  BarChart3,
-  Lock,
-  RefreshCw,
-} from "lucide-react";
+import { Zap, Shield, Cpu, BarChart3, Lock, RefreshCw } from "lucide-react";
 
 const features = [
   {
@@ -59,7 +52,8 @@ export default function Features() {
           </p>
           <p className="mt-6 text-lg leading-8 text-foreground/60">
             Our protocol combines the power of Arweave's permanent storage with
-            advanced DeFi capabilities to provide a seamless flash loan experience.
+            advanced DeFi capabilities to provide a seamless flash loan
+            experience.
           </p>
         </div>
         <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">

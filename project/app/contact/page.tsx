@@ -74,26 +74,42 @@ export default function ContactPage() {
                 <form className="space-y-6">
                   <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                     <div>
-                      <label htmlFor="name" className="block text-sm font-medium mb-2">
+                      <label
+                        htmlFor="name"
+                        className="block text-sm font-medium mb-2"
+                      >
                         Name
                       </label>
                       <Input id="name" placeholder="Your name" />
                     </div>
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium mb-2">
+                      <label
+                        htmlFor="email"
+                        className="block text-sm font-medium mb-2"
+                      >
                         Email
                       </label>
-                      <Input id="email" type="email" placeholder="you@example.com" />
+                      <Input
+                        id="email"
+                        type="email"
+                        placeholder="you@example.com"
+                      />
                     </div>
                   </div>
                   <div>
-                    <label htmlFor="subject" className="block text-sm font-medium mb-2">
+                    <label
+                      htmlFor="subject"
+                      className="block text-sm font-medium mb-2"
+                    >
                       Subject
                     </label>
                     <Input id="subject" placeholder="How can we help you?" />
                   </div>
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium mb-2">
+                    <label
+                      htmlFor="message"
+                      className="block text-sm font-medium mb-2"
+                    >
                       Message
                     </label>
                     <Textarea

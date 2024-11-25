@@ -9,7 +9,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "ArFlash - Arweave Flashloan Protocol",
-  description: "Decentralized flashloans on Arweave's actor-oriented hyperparallel contracts",
+  description:
+    "Decentralized flashloans on Arweave's actor-oriented hyperparallel contracts",
   openGraph: {
     url: "https://github.com/calc1f4r/ArFlash",
   },

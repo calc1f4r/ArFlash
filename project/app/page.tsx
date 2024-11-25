@@ -6,8 +6,6 @@ import Tokenomics from "@/components/tokenomics";
 import SecurityAudit from "@/components/security-audit";
 import Roadmap from "@/components/roadmap";
 import Partners from "@/components/partners";
-import Footer from "@/components/footer";
-
 export default function Home() {
   return (
     <main>

@@ -16,7 +16,8 @@ const values = [
   {
     icon: Heart,
     title: "Trust & Security",
-    description: "Maintaining the highest standards of security and reliability.",
+    description:
+      "Maintaining the highest standards of security and reliability.",
   },
   {
     icon: Trophy,
@@ -29,25 +30,29 @@ const team = [
   {
     name: "Sarah Chen",
     role: "CEO & Founder",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop",
     bio: "Former DeFi protocol architect with 10+ years in blockchain.",
   },
   {
     name: "Marcus Rodriguez",
     role: "CTO",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop",
     bio: "Blockchain security expert and Arweave core contributor.",
   },
   {
     name: "Elena Petrov",
     role: "Head of Research",
-    image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=400&h=400&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=400&h=400&fit=crop",
     bio: "PhD in Distributed Systems, specializing in consensus mechanisms.",
   },
   {
     name: "David Kim",
     role: "Lead Developer",
-    image: "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=400&h=400&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=400&h=400&fit=crop",
     bio: "Full-stack developer with expertise in smart contract development.",
   },
 ];
@@ -118,9 +123,7 @@ export default function AboutPage() {
                       className="object-cover"
                     />
                   </div>
-                  <h3 className="mt-6 text-lg font-semibold">
-                    {member.name}
-                  </h3>
+                  <h3 className="mt-6 text-lg font-semibold">{member.name}</h3>
                   <p className="text-sm text-primary">{member.role}</p>
                   <p className="mt-2 text-sm text-foreground/60">
                     {member.bio}

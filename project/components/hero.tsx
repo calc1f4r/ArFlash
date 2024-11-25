@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Zap } from "lucide-react";
-
+import Link from "next/link";
 export default function Hero() {
   return (
     <div className="relative isolate">
@@ -31,7 +31,9 @@ export default function Hero() {
           </div>
           <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
             Flash Loans on{" "}
-            <span className="text-primary">Arweave&apos;s Hyperparallel Network</span>
+            <span className="text-primary">
+              Arweave&apos;s Hyperparallel Network
+            </span>
           </h1>
           <p className="mt-6 text-lg leading-8 text-foreground/60">
             Leverage Arweave&apos;s actor-oriented smart contracts for instant,
@@ -43,9 +45,11 @@ export default function Hero() {
               Get Started
               <ArrowRight className="h-4 w-4" />
             </Button>
-            <Button variant="outline" size="lg">
-              Read Documentation
-            </Button>
+            <Link href={"https://calc1f4r.gitbook.io/arflash/"}>
+              <Button variant="outline" size="lg">
+                Read Documentation
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

@@ -55,7 +55,8 @@ export default function Roadmap() {
             Our Vision & Timeline
           </p>
           <p className="mt-6 text-lg leading-8 text-foreground/60">
-            Follow our journey as we build the future of decentralized flash loans.
+            Follow our journey as we build the future of decentralized flash
+            loans.
           </p>
         </div>
 

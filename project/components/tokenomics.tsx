@@ -46,8 +46,8 @@ export default function Tokenomics() {
             Sustainable Token Economics
           </p>
           <p className="mt-6 text-lg leading-8 text-foreground/60">
-            Our token model is designed for long-term sustainability and community
-            alignment.
+            Our token model is designed for long-term sustainability and
+            community alignment.
           </p>
         </div>
 
@@ -87,7 +87,10 @@ export default function Tokenomics() {
                         <span>40%</span>
                       </div>
                       <div className="w-full bg-muted rounded-full h-2">
-                        <div className="bg-chart-1 h-2 rounded-full" style={{ width: "40%" }}></div>
+                        <div
+                          className="bg-chart-1 h-2 rounded-full"
+                          style={{ width: "40%" }}
+                        ></div>
                       </div>
                     </div>
                     <div>
@@ -96,7 +99,10 @@ export default function Tokenomics() {
                         <span>20%</span>
                       </div>
                       <div className="w-full bg-muted rounded-full h-2">
-                        <div className="bg-chart-2 h-2 rounded-full" style={{ width: "20%" }}></div>
+                        <div
+                          className="bg-chart-2 h-2 rounded-full"
+                          style={{ width: "20%" }}
+                        ></div>
                       </div>
                     </div>
                     <div>
@@ -105,7 +111,10 @@ export default function Tokenomics() {
                         <span>25%</span>
                       </div>
                       <div className="w-full bg-muted rounded-full h-2">
-                        <div className="bg-chart-3 h-2 rounded-full" style={{ width: "25%" }}></div>
+                        <div
+                          className="bg-chart-3 h-2 rounded-full"
+                          style={{ width: "25%" }}
+                        ></div>
                       </div>
                     </div>
                     <div>
@@ -114,7 +123,10 @@ export default function Tokenomics() {
                         <span>15%</span>
                       </div>
                       <div className="w-full bg-muted rounded-full h-2">
-                        <div className="bg-chart-4 h-2 rounded-full" style={{ width: "15%" }}></div>
+                        <div
+                          className="bg-chart-4 h-2 rounded-full"
+                          style={{ width: "15%" }}
+                        ></div>
                       </div>
                     </div>
                   </div>
@@ -122,7 +134,9 @@ export default function Tokenomics() {
                     <h4 className="font-semibold">Vesting Schedule</h4>
                     <ul className="space-y-2 text-sm text-foreground/60">
                       <li>• Community Treasury: 4-year linear vesting</li>
-                      <li>• Team & Advisors: 2-year linear vesting, 6-month cliff</li>
+                      <li>
+                        • Team & Advisors: 2-year linear vesting, 6-month cliff
+                      </li>
                       <li>• Ecosystem Growth: Released based on milestones</li>
                       <li>• Initial Liquidity: Locked for 1 year</li>
                     </ul>

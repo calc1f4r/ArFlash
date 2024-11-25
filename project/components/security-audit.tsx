@@ -60,11 +60,17 @@ export default function SecurityAudit() {
                     >
                       <div>
                         <h4 className="font-semibold">{audit.firm}</h4>
-                        <p className="text-sm text-foreground/60">{audit.date}</p>
+                        <p className="text-sm text-foreground/60">
+                          {audit.date}
+                        </p>
                       </div>
                       <div className="text-right">
-                        <p className="font-semibold text-primary">{audit.score}</p>
-                        <p className="text-sm text-foreground/60">{audit.status}</p>
+                        <p className="font-semibold text-primary">
+                          {audit.score}
+                        </p>
+                        <p className="text-sm text-foreground/60">
+                          {audit.status}
+                        </p>
                       </div>
                     </div>
                   ))}
