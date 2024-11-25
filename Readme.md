@@ -1,6 +1,6 @@
 # Arflash: Flash Loan Protocol on Arweave
 
-Arflash is a state-of-the-art decentralized flash loan protocol built on the Arweave blockchain, utilizing its actor-oriented smart contracts. By leveraging Arweave's hyper-parallelized contract capabilities, Arflash provides secure, transparent, and permanent financial transactions without requiring collateral, all within a single transaction.
+Arflash is a cutting-edge decentralized flash loan protocol built on the Arweave blockchain, utilizing its actor-oriented smart contracts. By leveraging Arweave's hyper-parallelized contract capabilities, Arflash provides secure, transparent, and permanent financial transactions without requiring collateral, all within a single transaction.
 
 ## Protocol Blueprint
 
@@ -46,6 +46,21 @@ Arweave offers a unique blockchain solution with sustainable and perpetual data 
 - **No Collateral Required**: Access loans without asset lock-up.
 - **Decentralized**: Operate in a fully decentralized environment, free from intermediaries.
 - **Permanent Records**: All transactions are permanently stored on the Arweave network.
+
+## How It Works
+
+1. **Liquidity Provision**:
+    - Liquidity providers must first approve the protocol to spend their tokens.
+    - They call the add liquidity function on the protocol.
+
+2. **Request Loan**:
+    - When a user requests a flash loan, the requestLoan handler on the Arflash protocol is executed.
+    - The protocol contract approves the transfer of tokens to the receiver's address.
+    - It then calls the onLoanReceived handler on the receiver's contract, passing the loan details.
+
+3. **Loan Utilization and Repayment**:
+    - The receiver contract should transfer the tokens to itself and perform the desired operations (e.g., trading, arbitrage).
+    - After utilizing the loan, the receiver contract must return the borrowed tokens plus any applicable fees to the protocol contract.
 
 ## Getting Started with Arflash
 
