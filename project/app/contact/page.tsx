@@ -1,9 +1,12 @@
+"use client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, MessageSquare, MapPin, Phone } from "lucide-react";
-
+import { useConnection } from "arweave-wallet-kit";
+import { useState } from "react";
+import { toast } from "sonner";
 const contactMethods = [
   {
     icon: Mail,
@@ -14,6 +17,28 @@ const contactMethods = [
 ];
 
 export default function ContactPage() {
+  const { connected, connect, disconnect } = useConnection();
+  // State for form inputs
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+
+  // Function to send message
+  const sendMessage = () => {
+    if (connected) {
+      // Implement the logic to send the message
+      console.log("Message sent:", { name, email, subject, message });
+      // Clear the form after sending
+      setName("");
+      setEmail("");
+      setSubject("");
+      setMessage("");
+    } else {
+      toast.error("Please connect your wallet to send a message");
+    }
+  };
+
   return (
     <main className="flex-1">
       <section className="py-24 sm:py-32">
@@ -59,7 +84,9 @@ export default function ContactPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <form className="space-y-6">
+                <form
+                  className="space-y-6"
+                  onSubmit={(e) => e.preventDefault()}>
                   <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                     <div>
                       <label
@@ -67,7 +94,12 @@ export default function ContactPage() {
                         className="block text-sm font-medium mb-2">
                         Name
                       </label>
-                      <Input id="name" placeholder="Your name" />
+                      <Input
+                        id="name"
+                        placeholder="Your name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                      />
                     </div>
                     <div>
                       <label
@@ -79,6 +111,8 @@ export default function ContactPage() {
                         id="email"
                         type="email"
                         placeholder="you@example.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                       />
                     </div>
                   </div>
@@ -88,7 +122,12 @@ export default function ContactPage() {
                       className="block text-sm font-medium mb-2">
                       Subject
                     </label>
-                    <Input id="subject" placeholder="How can we help you?" />
+                    <Input
+                      id="subject"
+                      placeholder="How can we help you?"
+                      value={subject}
+                      onChange={(e) => setSubject(e.target.value)}
+                    />
                   </div>
                   <div>
                     <label
@@ -100,9 +139,17 @@ export default function ContactPage() {
                       id="message"
                       placeholder="Your message..."
                       rows={6}
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
                     />
                   </div>
-                  <Button className="w-full sm:w-auto">Send Message</Button>
+                  <Button
+                    onClick={() => {
+                      sendMessage();
+                    }}
+                    className="w-full sm:w-auto">
+                    Send Message
+                  </Button>
                 </form>
               </CardContent>
             </Card>

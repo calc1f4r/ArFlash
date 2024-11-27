@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import { ArweaveWalletKit } from "arweave-wallet-kit";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,6 +32,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange>
           <ArweaveWalletKit>
+            <Toaster richColors />
             <Navbar />
             {children}
             <Footer />
