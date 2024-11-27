@@ -8,20 +8,8 @@ const contactMethods = [
   {
     icon: Mail,
     title: "Email",
-    description: "Our friendly team is here to help.",
-    contact: "support@arflash.com",
-  },
-  {
-    icon: MapPin,
-    title: "Office",
-    description: "Come say hello at our office.",
-    contact: "100 Smith Street, Melbourne VIC 3000",
-  },
-  {
-    icon: Phone,
-    title: "Phone",
-    description: "Mon-Fri from 8am to 5pm.",
-    contact: "+1 (555) 000-0000",
+    description: "We are here to help",
+    contact: "20yashs09@gmail.com",
   },
 ];
 
@@ -44,7 +32,7 @@ export default function ContactPage() {
           </div>
 
           <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24">
-            <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+            <div className="flex flex-col items-center justify-center">
               {contactMethods.map((method) => (
                 <Card key={method.title} className="bg-muted/50">
                   <CardContent className="pt-6">
@@ -76,8 +64,7 @@ export default function ContactPage() {
                     <div>
                       <label
                         htmlFor="name"
-                        className="block text-sm font-medium mb-2"
-                      >
+                        className="block text-sm font-medium mb-2">
                         Name
                       </label>
                       <Input id="name" placeholder="Your name" />
@@ -85,8 +72,7 @@ export default function ContactPage() {
                     <div>
                       <label
                         htmlFor="email"
-                        className="block text-sm font-medium mb-2"
-                      >
+                        className="block text-sm font-medium mb-2">
                         Email
                       </label>
                       <Input
@@ -99,8 +85,7 @@ export default function ContactPage() {
                   <div>
                     <label
                       htmlFor="subject"
-                      className="block text-sm font-medium mb-2"
-                    >
+                      className="block text-sm font-medium mb-2">
                       Subject
                     </label>
                     <Input id="subject" placeholder="How can we help you?" />
@@ -108,8 +93,7 @@ export default function ContactPage() {
                   <div>
                     <label
                       htmlFor="message"
-                      className="block text-sm font-medium mb-2"
-                    >
+                      className="block text-sm font-medium mb-2">
                       Message
                     </label>
                     <Textarea

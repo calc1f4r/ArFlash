@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import { ArweaveWalletKit } from "arweave-wallet-kit";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,11 +29,12 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="dark"
           enableSystem
-          disableTransitionOnChange
-        >
-          <Navbar />
-          {children}
-          <Footer />
+          disableTransitionOnChange>
+          <ArweaveWalletKit>
+            <Navbar />
+            {children}
+            <Footer />
+          </ArweaveWalletKit>
         </ThemeProvider>
       </body>
     </html>

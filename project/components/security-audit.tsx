@@ -3,15 +3,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const audits = [
   {
-    firm: "CertiK",
+    firm: "Self-audited",
     date: "January 2024",
-    score: "95/100",
-    status: "Passed",
-  },
-  {
-    firm: "Trail of Bits",
-    date: "December 2023",
-    score: "98/100",
+    score: "55/100",
     status: "Passed",
   },
 ];
@@ -56,8 +50,7 @@ export default function SecurityAudit() {
                   {audits.map((audit) => (
                     <div
                       key={audit.firm}
-                      className="flex items-center justify-between border-b pb-4 last:border-0"
-                    >
+                      className="flex items-center justify-between border-b pb-4 last:border-0">
                       <div>
                         <h4 className="font-semibold">{audit.firm}</h4>
                         <p className="text-sm text-foreground/60">
@@ -90,8 +83,7 @@ export default function SecurityAudit() {
                   {securityFeatures.map((feature) => (
                     <div
                       key={feature}
-                      className="flex items-center gap-2 text-foreground/60"
-                    >
+                      className="flex items-center gap-2 text-foreground/60">
                       <CheckCircle className="h-4 w-4 text-primary" />
                       <span>{feature}</span>
                     </div>

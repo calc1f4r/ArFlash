@@ -7,21 +7,6 @@ const partners = [
     role: "Infrastructure Partner",
     logo: "https://cryptologos.cc/logos/arweave-ar-logo.png",
   },
-  {
-    name: "Chainlink",
-    role: "Oracle Provider",
-    logo: "https://cryptologos.cc/logos/chainlink-link-logo.png",
-  },
-  {
-    name: "Uniswap",
-    role: "DEX Partner",
-    logo: "https://cryptologos.cc/logos/uniswap-uni-logo.png",
-  },
-  {
-    name: "Aave",
-    role: "Lending Partner",
-    logo: "https://cryptologos.cc/logos/aave-aave-logo.png",
-  },
 ];
 
 export default function Partners() {
@@ -42,9 +27,9 @@ export default function Partners() {
         </div>
 
         <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="flex flex-center flex-col items-center">
             {partners.map((partner) => (
-              <Card key={partner.name} className="bg-muted/50">
+              <Card key={partner.name} className="bg-muted/50 relative z-20">
                 <CardContent className="flex flex-col items-center justify-center p-6">
                   <div className="relative h-16 w-16 mb-4">
                     <Image

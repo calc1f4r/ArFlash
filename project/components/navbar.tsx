@@ -6,14 +6,12 @@ import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Zap } from "lucide-react";
 import ThemeToggle from "./theme-toggle";
-
+import { ConnectButton } from "arweave-wallet-kit";
 const navigation = [
   { name: "Home", href: "/" },
   { name: "About", href: "/about" },
   { name: "Contact", href: "/contact" },
   { name: "Docs", href: "https://calc1f4r.gitbook.io/arflash/" },
-  { name: "Stats", href: "/stats" },
-  { name: "Governance", href: "/governance" },
 ];
 
 export default function Navbar() {
@@ -45,13 +43,13 @@ export default function Navbar() {
                   isActive(item.href)
                     ? "text-primary font-semibold"
                     : "text-foreground/60 hover:text-foreground"
-                } transition-colors`}
-              >
+                } transition-colors`}>
                 {item.name}
               </Link>
             ))}
             <ThemeToggle />
             <Button>Launch App</Button>
+            <ConnectButton profileModal={false} showBalance={true} />
           </div>
 
           {/* Mobile menu button */}
@@ -59,8 +57,7 @@ export default function Navbar() {
             <ThemeToggle />
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-foreground hover:text-foreground/60 focus:outline-none"
-            >
+              className="inline-flex items-center justify-center p-2 rounded-md text-foreground hover:text-foreground/60 focus:outline-none">
               {isOpen ? (
                 <X className="h-6 w-6" />
               ) : (
@@ -84,8 +81,7 @@ export default function Navbar() {
                     ? "text-primary font-semibold"
                     : "text-foreground/60"
                 } block px-3 py-2 rounded-md text-base font-medium hover:text-foreground transition-colors`}
-                onClick={() => setIsOpen(false)}
-              >
+                onClick={() => setIsOpen(false)}>
                 {item.name}
               </Link>
             ))}

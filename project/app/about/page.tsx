@@ -28,32 +28,10 @@ const values = [
 
 const team = [
   {
-    name: "Sarah Chen",
-    role: "CEO & Founder",
-    image:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop",
-    bio: "Former DeFi protocol architect with 10+ years in blockchain.",
-  },
-  {
-    name: "Marcus Rodriguez",
-    role: "CTO",
-    image:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop",
-    bio: "Blockchain security expert and Arweave core contributor.",
-  },
-  {
-    name: "Elena Petrov",
-    role: "Head of Research",
-    image:
-      "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=400&h=400&fit=crop",
-    bio: "PhD in Distributed Systems, specializing in consensus mechanisms.",
-  },
-  {
-    name: "David Kim",
-    role: "Lead Developer",
-    image:
-      "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=400&h=400&fit=crop",
-    bio: "Full-stack developer with expertise in smart contract development.",
+    name: "Yash | Calcifer",
+    role: "CEO ",
+    image: "./calcifer_dp.jpg",
+    bio: "Auditor and security expert with a background in blockchain.",
   },
 ];
 
@@ -112,7 +90,7 @@ export default function AboutPage() {
           </div>
 
           <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-            <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="flex items-center justify-center">
               {team.map((member) => (
                 <div key={member.name} className="text-center">
                   <div className="relative mx-auto h-40 w-40 overflow-hidden rounded-full">
