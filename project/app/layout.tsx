@@ -31,7 +31,17 @@ export default function RootLayout({
           defaultTheme="dark"
           enableSystem
           disableTransitionOnChange>
-          <ArweaveWalletKit>
+          <ArweaveWalletKit
+            config={{
+              permissions: [
+                "ACCESS_ADDRESS",
+                "ACCESS_PUBLIC_KEY",
+                "SIGN_TRANSACTION",
+                "DISPATCH",
+                "SIGNATURE",
+              ],
+              ensurePermissions: true,
+            }}>
             <Toaster richColors />
             <Navbar />
             {children}

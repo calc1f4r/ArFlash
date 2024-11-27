@@ -7,6 +7,7 @@ import { Mail, MessageSquare, MapPin, Phone } from "lucide-react";
 import { useConnection } from "arweave-wallet-kit";
 import { useState } from "react";
 import { toast } from "sonner";
+import { createDataItemSigner, message, result } from "@permaweb/aoconnect";
 const contactMethods = [
   {
     icon: Mail,
@@ -16,26 +17,69 @@ const contactMethods = [
   },
 ];
 
+function concatenateStrings(...strings: string[]): string {
+  return strings.join(" "); // Joins the strings with a space in between
+}
+
 export default function ContactPage() {
-  const { connected, connect, disconnect } = useConnection();
+  const { connected } = useConnection();
+  const [isPosting, setIsPosting] = useState(false);
+
   // State for form inputs
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
-  const [message, setMessage] = useState("");
+  const [description, setDescription] = useState("");
 
-  // Function to send message
-  const sendMessage = () => {
+  const processId = "sIrL7NuKoh8iIL9OAgNdmLcMnRG0NYz0bcp3gi9H6HY";
+
+  // Function to send description
+  const sendDescription = async () => {
     if (connected) {
-      // Implement the logic to send the message
-      console.log("Message sent:", { name, email, subject, message });
+      // Create draft content with name, email, subject, and description
+      const draftContent = concatenateStrings(
+        "Name: ",
+        name,
+        "\n",
+        "Email: ",
+        email,
+        "\n",
+        "Subject: ",
+        subject,
+        "\n",
+        "Description: ",
+        description
+      );
+
       // Clear the form after sending
+
+      setIsPosting(true);
+
+      try {
+        const response = await message({
+          process: processId,
+          signer: createDataItemSigner(window.arweaveWallet),
+          data: draftContent,
+        });
+        const postResult = await result({
+          process: processId,
+          message: response,
+        });
+        toast.success("Query sent successfully!");
+      } catch (error) {
+        console.error("Error sending description:", error);
+        toast.error("Failed to send description. Please try again.");
+      } finally {
+        setIsPosting(false);
+      }
+
+      // Clear form fields
       setName("");
       setEmail("");
       setSubject("");
-      setMessage("");
+      setDescription("");
     } else {
-      toast.error("Please connect your wallet to send a message");
+      toast.error("Please connect your wallet to send a query");
     }
   };
 
@@ -51,8 +95,8 @@ export default function ContactPage() {
               Get in Touch
             </p>
             <p className="mt-6 text-lg leading-8 text-foreground/60">
-              Have questions? We'd love to hear from you. Send us a message and
-              we'll respond as soon as possible.
+              Have questions? We'd love to hear from you. Send us a description
+              and we'll respond as soon as possible.
             </p>
           </div>
 
@@ -80,7 +124,7 @@ export default function ContactPage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <MessageSquare className="h-5 w-5 text-primary" />
-                  Send us a Message
+                  Send us a description
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -131,24 +175,25 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <label
-                      htmlFor="message"
+                      htmlFor="description"
                       className="block text-sm font-medium mb-2">
-                      Message
+                      Description
                     </label>
                     <Textarea
-                      id="message"
-                      placeholder="Your message..."
+                      id="description"
+                      placeholder="Your description..."
                       rows={6}
-                      value={message}
-                      onChange={(e) => setMessage(e.target.value)}
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
                     />
                   </div>
                   <Button
-                    onClick={() => {
-                      sendMessage();
+                    onClick={(e) => {
+                      e.preventDefault();
+                      sendDescription();
                     }}
                     className="w-full sm:w-auto">
-                    Send Message
+                    Send description
                   </Button>
                 </form>
               </CardContent>
