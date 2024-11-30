@@ -48,7 +48,11 @@ export default function Navbar() {
               </Link>
             ))}
             <ThemeToggle />
-            <Button>Launch App</Button>
+            {pathname !== "/flashloan" && (
+              <Button onClick={() => (window.location.href = "/flashloan")}>
+                Launch App
+              </Button>
+            )}
             <ConnectButton profileModal={false} showBalance={true} />
           </div>
 
@@ -85,7 +89,12 @@ export default function Navbar() {
                 {item.name}
               </Link>
             ))}
-            <Button className="w-full mt-2">Launch App</Button>
+
+            <Button
+              className="w-full mt-2"
+              onClick={() => (window.location.href = "/flashloan")}>
+              Launch App
+            </Button>
           </div>
         </div>
       )}

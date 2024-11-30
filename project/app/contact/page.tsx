@@ -3,11 +3,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, MessageSquare, MapPin, Phone } from "lucide-react";
+import { Mail, MessageSquare } from "lucide-react";
 import { useConnection } from "arweave-wallet-kit";
 import { useState } from "react";
 import { toast } from "sonner";
 import { createDataItemSigner, message, result } from "@permaweb/aoconnect";
+
 const contactMethods = [
   {
     icon: Mail,
@@ -18,7 +19,7 @@ const contactMethods = [
 ];
 
 function concatenateStrings(...strings: string[]): string {
-  return strings.join(" "); // Joins the strings with a space in between
+  return strings.join(" ");
 }
 
 export default function ContactPage() {
@@ -51,8 +52,6 @@ export default function ContactPage() {
         description
       );
 
-      // Clear the form after sending
-
       setIsPosting(true);
 
       try {
@@ -65,10 +64,11 @@ export default function ContactPage() {
           process: processId,
           message: response,
         });
+        console.log("Post result:", postResult);
         toast.success("Query sent successfully!");
       } catch (error) {
         console.error("Error sending description:", error);
-        toast.error("Failed to send description. Please try again.");
+        toast.error("Failed to send query. Please try again.");
       } finally {
         setIsPosting(false);
       }
