@@ -30,7 +30,8 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="dark"
           enableSystem
-          disableTransitionOnChange>
+          disableTransitionOnChange
+        >
           <ArweaveWalletKit
             config={{
               permissions: [
@@ -41,7 +42,8 @@ export default function RootLayout({
                 "SIGNATURE",
               ],
               ensurePermissions: true,
-            }}>
+            }}
+          >
             <Toaster richColors />
             <Navbar />
             {children}

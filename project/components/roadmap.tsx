@@ -65,7 +65,8 @@ export default function Roadmap() {
             {milestones.map((milestone, index) => (
               <div
                 key={milestone.quarter}
-                className="relative pl-16 before:absolute before:left-6 before:top-0 before:h-full before:w-[2px] before:bg-border last:before:hidden">
+                className="relative pl-16 before:absolute before:left-6 before:top-0 before:h-full before:w-[2px] before:bg-border last:before:hidden"
+              >
                 <div className="absolute left-0 top-1 flex h-12 w-12 items-center justify-center rounded-full bg-muted">
                   <Milestone className="h-6 w-6 text-primary" />
                 </div>

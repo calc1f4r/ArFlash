@@ -69,7 +69,8 @@ export default function Footer() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-foreground/60 hover:text-foreground">
+                  className="text-foreground/60 hover:text-foreground"
+                >
                   <span className="sr-only">{item.name}</span>
                   <item.icon className="h-6 w-6" aria-hidden="true" />
                 </Link>
@@ -85,7 +86,8 @@ export default function Footer() {
                     <li key={item.name}>
                       <Link
                         href={item.href}
-                        className="text-sm leading-6 text-foreground/60 hover:text-foreground">
+                        className="text-sm leading-6 text-foreground/60 hover:text-foreground"
+                      >
                         {item.name}
                       </Link>
                     </li>
@@ -99,7 +101,8 @@ export default function Footer() {
                     <li key={item.name}>
                       <Link
                         href={item.href}
-                        className="text-sm leading-6 text-foreground/60 hover:text-foreground">
+                        className="text-sm leading-6 text-foreground/60 hover:text-foreground"
+                      >
                         {item.name}
                       </Link>
                     </li>
@@ -115,7 +118,8 @@ export default function Footer() {
                     <li key={item.name}>
                       <Link
                         href={item.href}
-                        className="text-sm leading-6 text-foreground/60 hover:text-foreground">
+                        className="text-sm leading-6 text-foreground/60 hover:text-foreground"
+                      >
                         {item.name}
                       </Link>
                     </li>
@@ -129,7 +133,8 @@ export default function Footer() {
                     <li key={item.name}>
                       <Link
                         href={item.href}
-                        className="text-sm leading-6 text-foreground/60 hover:text-foreground">
+                        className="text-sm leading-6 text-foreground/60 hover:text-foreground"
+                      >
                         {item.name}
                       </Link>
                     </li>

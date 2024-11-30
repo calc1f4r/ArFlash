@@ -15,7 +15,7 @@ export function StatsOverview() {
           <ArrowUpRight className="w-6 h-6 text-emerald-500" />
         </div>
       </Card>
-      
+
       <Card className="p-6 backdrop-blur-lg bg-background/30">
         <div className="flex items-center justify-between">
           <div>
@@ -25,7 +25,7 @@ export function StatsOverview() {
           <ArrowDownRight className="w-6 h-6 text-rose-500" />
         </div>
       </Card>
-      
+
       <Card className="p-6 backdrop-blur-lg bg-background/30">
         <div className="flex items-center justify-between">
           <div>

@@ -124,7 +124,8 @@ export default function LiquidityInterface() {
                 />
                 <label
                   htmlFor="terms"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
                   I accept the terms and conditions
                 </label>
               </div>
@@ -132,7 +133,8 @@ export default function LiquidityInterface() {
               <Button
                 className="w-full"
                 disabled={!amount || !selectedToken || !termsAccepted}
-                onClick={handleProvideLiquidity}>
+                onClick={handleProvideLiquidity}
+              >
                 Provide Liquidity
               </Button>
             </>

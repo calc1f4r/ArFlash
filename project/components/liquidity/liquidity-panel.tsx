@@ -77,7 +77,8 @@ export function LiquidityPanel() {
 
           <Button
             onClick={handleSupply}
-            className="w-full bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] hover:opacity-90">
+            className="w-full bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] hover:opacity-90"
+          >
             Supply
           </Button>
         </div>
