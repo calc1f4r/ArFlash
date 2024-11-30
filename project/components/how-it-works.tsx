@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-
+import Link from "next/link";
 const steps = [
   {
     number: "01",
@@ -57,10 +57,12 @@ export default function HowItWorks() {
             ))}
           </dl>
           <div className="mt-16 flex justify-center">
-            <Button size="lg" className="gap-2">
-              Try It Now
-              <ArrowRight className="h-4 w-4" />
-            </Button>
+            <Link href="/flashloan">
+              <Button size="lg" className="gap-2">
+                Try It Now
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

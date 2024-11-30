@@ -10,7 +10,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-
+import { useConnection } from "arweave-wallet-kit";
 const data = [
   { name: "Jan", value: 1000 },
   { name: "Feb", value: 1200 },
@@ -21,6 +21,13 @@ const data = [
 ];
 
 export function LiquidityStats() {
+  const { connected, connect, disconnect } = useConnection();
+
+  const totalLiquidity = connected ? "$2,000.00" : "$0.00";
+  const currentApy = connected ? "5.67%" : "0%";
+  const rewardsEarned = connected ? "$120.45" : "$0.00";
+  const lockPeriod = connected ? "30 Days" : "0 Days";
+
   return (
     <Card>
       <CardHeader>
@@ -31,19 +38,19 @@ export function LiquidityStats() {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <p className="text-sm text-muted-foreground">Total Liquidity</p>
-              <p className="text-2xl font-bold">$2,000.00</p>
+              <p className="text-2xl font-bold">{totalLiquidity}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Current APY</p>
-              <p className="text-2xl font-bold">5.67%</p>
+              <p className="text-2xl font-bold">{currentApy}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Rewards Earned</p>
-              <p className="text-2xl font-bold">$120.45</p>
+              <p className="text-2xl font-bold">{rewardsEarned}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Lock Period</p>
-              <p className="text-2xl font-bold">30 Days</p>
+              <p className="text-2xl font-bold">{lockPeriod}</p>
             </div>
           </div>
 

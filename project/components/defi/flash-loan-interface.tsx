@@ -49,7 +49,7 @@ export default function FlashLoanInterface() {
     }
   };
 
-  const flashLoanFee = 0.09; // Replace with actual fee calculation
+  const flashLoanFee = 0.07; // Replace with actual fee calculation
 
   return (
     <div className="grid gap-6 lg:grid-cols-2">
@@ -97,7 +97,7 @@ export default function FlashLoanInterface() {
                   onChange={(e) => setAmount(e.target.value)}
                 />
                 <p className="text-sm text-muted-foreground">
-                  Flash Loan Fee: {flashLoanFee}%
+                  Flash Loan Fee: {flashLoanFee.toFixed(2)}%
                 </p>
               </div>
 
@@ -120,7 +120,7 @@ export default function FlashLoanInterface() {
 
               <div className="text-sm text-muted-foreground">
                 <a
-                  href="/docs/flash-loans"
+                  href="https://calc1f4r.gitbook.io/arflash/specification/flashloan-reciever-specification"
                   className="text-primary hover:underline">
                   View Flash Loan Documentation →
                 </a>
