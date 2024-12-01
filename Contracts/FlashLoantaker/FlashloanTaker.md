@@ -13,16 +13,18 @@ The `onLoanReceived` handler expects the following parameters within the `msg` o
   - **Type**: string (converted to number within the handler)
   - **Description**: The fee percentage to be applied to the transferred tokens. This percentage is used to calculate the fee amount, which is added to the approved quantity.
 
-🚀 **Explanation**: 
+🚀 **Explanation**:
 
 ### Parameter Extraction and Validation
 
 The handler begins by extracting and converting the necessary parameters from the `msg` object:
+
 - `quantity` is extracted from `msg.Tags.Quantity` and converted to a number.
 - `tokenProcessId` is extracted from `msg.Tags.TokenProcessId`.
 - `feeAmount` is extracted from `msg.Tags.Fee` and converted to a number.
 
 Assertions are then used to ensure that the extracted parameters are of the expected types:
+
 - `quantity` must be a number.
 - `tokenProcessId` must be a string.
 - `feeAmount` must be a number.

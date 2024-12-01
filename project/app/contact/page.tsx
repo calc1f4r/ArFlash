@@ -49,7 +49,7 @@ export default function ContactPage() {
         subject,
         "\n",
         "Description: ",
-        description,
+        description
       );
 
       setIsPosting(true);
@@ -95,8 +95,8 @@ export default function ContactPage() {
               Get in Touch
             </p>
             <p className="mt-6 text-lg leading-8 text-foreground/60">
-              Have questions? We'd love to hear from you. Send us a description
-              and we'll respond as soon as possible.
+              Have questions? We'd love to hear from you. Send us a Query and
+              we'll respond as soon as possible.
             </p>
           </div>
 
@@ -130,14 +130,12 @@ export default function ContactPage() {
               <CardContent>
                 <form
                   className="space-y-6"
-                  onSubmit={(e) => e.preventDefault()}
-                >
+                  onSubmit={(e) => e.preventDefault()}>
                   <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                     <div>
                       <label
                         htmlFor="name"
-                        className="block text-sm font-medium mb-2"
-                      >
+                        className="block text-sm font-medium mb-2">
                         Name
                       </label>
                       <Input
@@ -150,8 +148,7 @@ export default function ContactPage() {
                     <div>
                       <label
                         htmlFor="email"
-                        className="block text-sm font-medium mb-2"
-                      >
+                        className="block text-sm font-medium mb-2">
                         Email
                       </label>
                       <Input
@@ -166,8 +163,7 @@ export default function ContactPage() {
                   <div>
                     <label
                       htmlFor="subject"
-                      className="block text-sm font-medium mb-2"
-                    >
+                      className="block text-sm font-medium mb-2">
                       Subject
                     </label>
                     <Input
@@ -180,8 +176,7 @@ export default function ContactPage() {
                   <div>
                     <label
                       htmlFor="description"
-                      className="block text-sm font-medium mb-2"
-                    >
+                      className="block text-sm font-medium mb-2">
                       Description
                     </label>
                     <Textarea
@@ -192,13 +187,18 @@ export default function ContactPage() {
                       onChange={(e) => setDescription(e.target.value)}
                     />
                   </div>
+                  <div>
+                    <p className="text-sm text-foreground/60">
+                      Please provide as much detail as possible so we can best
+                      assist you.
+                    </p>
+                  </div>
                   <Button
                     onClick={(e) => {
                       e.preventDefault();
                       sendDescription();
                     }}
-                    className="w-full sm:w-auto"
-                  >
+                    className="w-full sm:w-auto">
                     Send description
                   </Button>
                 </form>

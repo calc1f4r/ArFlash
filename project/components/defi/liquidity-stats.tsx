@@ -23,10 +23,10 @@ const data = [
 export function LiquidityStats() {
   const { connected, connect, disconnect } = useConnection();
 
-  const totalLiquidity = connected ? "$2,000.00" : "$0.00";
-  const currentApy = connected ? "5.67%" : "0%";
-  const rewardsEarned = connected ? "$120.45" : "$0.00";
-  const lockPeriod = connected ? "30 Days" : "0 Days";
+  const totalLiquidity = "$0.00";
+  const currentApy = "0%";
+  const rewardsEarned = "$0.00";
+  const lockPeriod = "0 Days";
 
   return (
     <Card>

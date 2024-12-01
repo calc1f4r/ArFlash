@@ -20,9 +20,12 @@ import { TransactionPreview } from "./transaction-preview";
 import { useConnection } from "arweave-wallet-kit";
 
 const supportedTokens = [
-  { id: "eth", name: "Ethereum", symbol: "ETH" },
-  { id: "usdc", name: "USD Coin", symbol: "USDC" },
-  { id: "dai", name: "Dai", symbol: "DAI" },
+  {
+    id: "ARUSDC",
+    name: "ARUSDC",
+    symbol: "ARUSDC",
+    ao_id: "AOPvl2mFYyTlxUk1pqMYVgPNueFaC_7dxBMOo64oY0A",
+  },
 ];
 
 export default function FlashLoanInterface() {
@@ -114,16 +117,14 @@ export default function FlashLoanInterface() {
               <Button
                 className="w-full"
                 disabled={!amount || !selectedToken || !contractAddress}
-                onClick={handleExecuteFlashLoan}
-              >
+                onClick={handleExecuteFlashLoan}>
                 Execute Flash Loan
               </Button>
 
               <div className="text-sm text-muted-foreground">
                 <a
                   href="https://calc1f4r.gitbook.io/arflash/specification/flashloan-reciever-specification"
-                  className="text-primary hover:underline"
-                >
+                  className="text-primary hover:underline">
                   View Flash Loan Documentation →
                 </a>
               </div>

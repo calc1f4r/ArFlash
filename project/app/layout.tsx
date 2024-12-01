@@ -6,7 +6,7 @@ import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import { ArweaveWalletKit } from "arweave-wallet-kit";
 import { Toaster } from "sonner";
-
+import { Analytics } from "@vercel/analytics/react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     url: "https://github.com/calc1f4r/ArFlash",
   },
 };
-
+  
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -30,8 +30,7 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="dark"
           enableSystem
-          disableTransitionOnChange
-        >
+          disableTransitionOnChange>
           <ArweaveWalletKit
             config={{
               permissions: [
@@ -42,11 +41,11 @@ export default function RootLayout({
                 "SIGNATURE",
               ],
               ensurePermissions: true,
-            }}
-          >
+            }}>
             <Toaster richColors />
             <Navbar />
             {children}
+            <Analytics />
             <Footer />
           </ArweaveWalletKit>
         </ThemeProvider>

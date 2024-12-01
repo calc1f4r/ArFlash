@@ -1,8 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { use, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
+import {
+  createDataItemSigner,
+  dryrun,
+  message,
+  result,
+} from "@permaweb/aoconnect";
+import { useActiveAddress } from "arweave-wallet-kit";
+import { ArflashAoId, ArFakeUSDCAoId } from "@/constants/constants";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -14,46 +23,165 @@ import {
 } from "@/components/ui/select";
 import { useConnection } from "arweave-wallet-kit";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useToast } from "@/hooks/use-toast";
 import { LiquidityStats } from "./liquidity-stats";
 import { WalletConnect } from "./wallet-connect";
-
+import { toast } from "sonner";
 const supportedTokens = [
-  { id: "eth", name: "Ethereum", symbol: "ETH" },
-  { id: "usdc", name: "USD Coin", symbol: "USDC" },
-  { id: "dai", name: "Dai", symbol: "DAI" },
-];
-
-const lockPeriods = [
-  { value: "0", label: "No Lock" },
-  { value: "30", label: "30 Days" },
-  { value: "90", label: "90 Days" },
-  { value: "180", label: "180 Days" },
+  {
+    id: "ARUSDC",
+    name: "ARUSDC",
+    symbol: "ARUSDC",
+    ao_id: ArFakeUSDCAoId,
+  },
 ];
 
 export default function LiquidityInterface() {
-  const { toast } = useToast();
+  const [userBalance, setUserBalance] = useState(0);
+  const [selectedToken, setSelectedToken] = useState("");
+  const [userAllowance, setUserAllowance] = useState(0);
+  const activeAddress = useActiveAddress();
+
+  async function fetchUserBalance() {
+    try {
+      let selectedTokenObj = supportedTokens.find(
+        (token) => token.id === selectedToken
+      );
+      if (!selectedTokenObj) {
+        selectedTokenObj = supportedTokens[0];
+      }
+      const res = await dryrun({
+        process: selectedTokenObj.ao_id,
+        tags: [
+          { name: "Action", value: "Balance" },
+          {
+            name: "Target",
+            value: activeAddress || "",
+          },
+        ],
+        data: "",
+        anchor: "1234",
+        signer: createDataItemSigner(window.arweaveWallet),
+      });
+
+      setUserBalance(res.Messages[0].Tags[7].value);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const { connected, connect, disconnect } = useConnection();
 
   const [amount, setAmount] = useState("");
-  const [selectedToken, setSelectedToken] = useState("");
-  const [lockPeriod, setLockPeriod] = useState("0");
   const [termsAccepted, setTermsAccepted] = useState(false);
-  const [isConnected, setIsConnected] = useState(false);
 
+  useEffect(() => {
+    fetchUserBalance();
+    fetchUserAllowance();
+    console.log(userBalance);
+    console.log(userAllowance);
+  }, [selectedToken, amount, selectedToken]);
+
+  async function fetchUserAllowance() {
+    try {
+      let selectedTokenObj = supportedTokens.find(
+        (token) => token.id === selectedToken
+      );
+      if (!selectedTokenObj) {
+        selectedTokenObj = supportedTokens[0];
+      }
+      const res = await message({
+        process: selectedTokenObj.ao_id,
+        tags: [
+          { name: "Action", value: "Allowance" },
+          {
+            name: "Spender",
+            value: ArflashAoId || "",
+          },
+        ],
+        signer: createDataItemSigner(window.arweaveWallet),
+      });
+
+      const postResult = await result({
+        process: ArFakeUSDCAoId,
+        message: res,
+      });
+      setUserAllowance(postResult.Messages[0].Tags[5].value);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  let changeAllowance = async (allowance: string) => {
+    let selectedTokenObj = supportedTokens.find(
+      (token) => token.id === selectedToken
+    );
+    if (!selectedTokenObj) {
+      selectedTokenObj = supportedTokens[0];
+    }
+
+    const response = await message({
+      process: ArFakeUSDCAoId,
+      tags: [
+        {
+          name: "Action",
+          value: "Approve",
+        },
+        {
+          name: "Spender",
+          value: ArflashAoId,
+        },
+        {
+          name: "Quantity",
+          value: allowance,
+        },
+      ],
+      signer: createDataItemSigner(window.arweaveWallet),
+    });
+    const postResult = await result({
+      process: ArFakeUSDCAoId,
+      message: response,
+    });
+    console.log(postResult);
+    toast.success("Tokens approved successfully");
+  };
   const handleProvideLiquidity = async () => {
     try {
-      // Implement liquidity provision logic here
-      toast({
-        title: "Processing Transaction",
-        description: "Please wait while we process your transaction...",
+      console.log("Providing liquidity...");
+      if (Number(amount) > userBalance) {
+        toast.error("Insufficient balance!");
+        return;
+      }
+
+      if (Number(amount) > Number(userAllowance)) {
+        toast.info("Processing Transaction", {
+          description: "Please wait while we process your transaction...",
+        });
+        await changeAllowance(amount);
+      }
+
+      const response = await message({
+        process: ArflashAoId,
+        tags: [
+          {
+            name: "Action",
+            value: "AddLiquidity",
+          },
+          {
+            name: "amount",
+            value: amount,
+          },
+        ],
+        signer: createDataItemSigner(window.arweaveWallet),
       });
+      const postResult = await result({
+        process: ArFakeUSDCAoId,
+        message: response,
+      });
+      // toast.info("Processing Transaction");
+      console.log(postResult);
+      toast.success("Liquidity provided successfully");
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to provide liquidity. Please try again.",
-        variant: "destructive",
-      });
+      toast.error("Failed to provide liquidity. Please try again.");
     }
   };
 
@@ -100,22 +228,6 @@ export default function LiquidityInterface() {
                 </p>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="lockPeriod">Lock Period</Label>
-                <Select value={lockPeriod} onValueChange={setLockPeriod}>
-                  <SelectTrigger id="lockPeriod">
-                    <SelectValue placeholder="Select lock period" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {lockPeriods.map((period) => (
-                      <SelectItem key={period.value} value={period.value}>
-                        {period.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
               <div className="flex items-center space-x-2">
                 <Checkbox
                   id="terms"
@@ -124,8 +236,7 @@ export default function LiquidityInterface() {
                 />
                 <label
                   htmlFor="terms"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                   I accept the terms and conditions
                 </label>
               </div>
@@ -133,9 +244,10 @@ export default function LiquidityInterface() {
               <Button
                 className="w-full"
                 disabled={!amount || !selectedToken || !termsAccepted}
-                onClick={handleProvideLiquidity}
-              >
-                Provide Liquidity
+                onClick={handleProvideLiquidity}>
+                {userAllowance >= Number(amount)
+                  ? "Add liquidity"
+                  : "Approve Tokens"}
               </Button>
             </>
           )}
