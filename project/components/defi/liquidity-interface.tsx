@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useState } from "react";
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
@@ -44,7 +44,7 @@ export default function LiquidityInterface() {
   async function fetchUserBalance() {
     try {
       let selectedTokenObj = supportedTokens.find(
-        (token) => token.id === selectedToken
+        (token) => token.id === selectedToken,
       );
       if (!selectedTokenObj) {
         selectedTokenObj = supportedTokens[0];
@@ -84,7 +84,7 @@ export default function LiquidityInterface() {
   async function fetchUserAllowance() {
     try {
       let selectedTokenObj = supportedTokens.find(
-        (token) => token.id === selectedToken
+        (token) => token.id === selectedToken,
       );
       if (!selectedTokenObj) {
         selectedTokenObj = supportedTokens[0];
@@ -113,7 +113,7 @@ export default function LiquidityInterface() {
 
   let changeAllowance = async (allowance: string) => {
     let selectedTokenObj = supportedTokens.find(
-      (token) => token.id === selectedToken
+      (token) => token.id === selectedToken,
     );
     if (!selectedTokenObj) {
       selectedTokenObj = supportedTokens[0];
@@ -141,8 +141,6 @@ export default function LiquidityInterface() {
       process: ArFakeUSDCAoId,
       message: response,
     });
-    console.log(postResult);
-    toast.success("Tokens approved successfully");
   };
   const handleProvideLiquidity = async () => {
     try {
@@ -157,29 +155,32 @@ export default function LiquidityInterface() {
           description: "Please wait while we process your transaction...",
         });
         await changeAllowance(amount);
-      }
 
-      const response = await message({
-        process: ArflashAoId,
-        tags: [
-          {
-            name: "Action",
-            value: "AddLiquidity",
-          },
-          {
-            name: "amount",
-            value: amount,
-          },
-        ],
-        signer: createDataItemSigner(window.arweaveWallet),
-      });
-      const postResult = await result({
-        process: ArFakeUSDCAoId,
-        message: response,
-      });
-      // toast.info("Processing Transaction");
-      console.log(postResult);
-      toast.success("Liquidity provided successfully");
+        toast.success("Tokens approved successfully");
+      } else {
+        const response = await message({
+          process: ArflashAoId,
+          tags: [
+            {
+              name: "Action",
+              value: "addLiquidity",
+            },
+            {
+              name: "amount",
+              value: amount,
+            },
+          ],
+          signer: createDataItemSigner(window.arweaveWallet),
+        });
+
+        toast.info("Your transaction is being processed. Please wait...");
+
+        const postResult = await result({
+          process: ArFakeUSDCAoId,
+          message: response,
+        });
+        toast.success("Liquidity provided successfully");
+      }
     } catch (error) {
       toast.error("Failed to provide liquidity. Please try again.");
     }
@@ -236,7 +237,8 @@ export default function LiquidityInterface() {
                 />
                 <label
                   htmlFor="terms"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
                   I accept the terms and conditions
                 </label>
               </div>
@@ -244,7 +246,8 @@ export default function LiquidityInterface() {
               <Button
                 className="w-full"
                 disabled={!amount || !selectedToken || !termsAccepted}
-                onClick={handleProvideLiquidity}>
+                onClick={handleProvideLiquidity}
+              >
                 {userAllowance >= Number(amount)
                   ? "Add liquidity"
                   : "Approve Tokens"}

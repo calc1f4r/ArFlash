@@ -41,10 +41,12 @@ export default function Hero() {
             arbitrage traders.
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
-            <Button size="lg" className="gap-2">
-              Get Started
-              <ArrowRight className="h-4 w-4" />
-            </Button>
+            <Link href={"/flashloan"}>
+              <Button size="lg" className="gap-2">
+                Get Started
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </Link>
             <Link href={"https://calc1f4r.gitbook.io/arflash/"}>
               <Button variant="outline" size="lg">
                 Read Documentation
