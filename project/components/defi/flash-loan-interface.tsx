@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,43 +12,91 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  createDataItemSigner,
+  dryrun,
+  message,
+  result,
+} from "@permaweb/aoconnect";
+import { ArflashAoId, ArFakeUSDCAoId } from "@/constants/constants";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertTriangle } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
 import { WalletConnect } from "./wallet-connect";
 import { TransactionPreview } from "./transaction-preview";
 import { useConnection } from "arweave-wallet-kit";
+import { useActiveAddress } from "arweave-wallet-kit";
+import { toast } from "sonner";
 
 const supportedTokens = [
   {
     id: "ARUSDC",
     name: "ARUSDC",
     symbol: "ARUSDC",
-    ao_id: "AOPvl2mFYyTlxUk1pqMYVgPNueFaC_7dxBMOo64oY0A",
+    ao_id: ArFakeUSDCAoId,
   },
 ];
 
 export default function FlashLoanInterface() {
-  const { toast } = useToast();
   const [amount, setAmount] = useState("");
   const [selectedToken, setSelectedToken] = useState("");
   const { connected, connect, disconnect } = useConnection();
-
+  const activeAddress = useActiveAddress();
   const [contractAddress, setContractAddress] = useState("");
-
+  const [totalLiquidity, setTotalLiquidity] = useState(0);
+  useEffect(() => {
+    const fetchTotalLiquidity = async () => {
+      if (connected) {
+        const res = await dryrun({
+          process: ArflashAoId,
+          tags: [{ name: "Action", value: "TotalLiquidity" }],
+          data: "",
+          anchor: "1234",
+          signer: createDataItemSigner(window.arweaveWallet),
+        });
+        if (res.Error) {
+          console.error(res.Error);
+        }
+        console.log(res.Messages[0].Tags[4].value);
+        setTotalLiquidity(Number(res.Messages[0].Tags[4].value));
+      }
+    };
+    fetchTotalLiquidity();
+  }, [amount, selectedToken]);
   const handleExecuteFlashLoan = async () => {
     try {
-      // Implement flash loan execution logic here
-      toast({
-        title: "Processing Flash Loan",
+      if (Number(amount) > totalLiquidity) {
+        toast.error("Insufficient balance!");
+        return;
+      }
+
+      const response = await message({
+        process: ArflashAoId,
+        tags: [
+          {
+            name: "Action",
+            value: "requestLoan",
+          },
+          {
+            name: "amount",
+            value: amount,
+          },
+          {
+            name: "receiver",
+            value: contractAddress,
+          },
+        ],
+        signer: createDataItemSigner(window.arweaveWallet),
+      });
+      toast.info("Processing Flash Loan", {
         description: "Please wait while we process your transaction...",
       });
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to execute flash loan. Please try again.",
-        variant: "destructive",
+      const postResult = await result({
+        process: ArFakeUSDCAoId,
+        message: response,
       });
+      toast.success("Liquidity provided successfully");
+    } catch (error) {
+      toast.error("Failed to execute flash loan. Please try again.");
     }
   };
 
