@@ -248,7 +248,7 @@ export default function LiquidityInterface() {
             value: "RemoveLiquidity",
           },
           {
-            name: "Amount",
+            name: "Amoun",
             value: removeAmount,
           },
         ],

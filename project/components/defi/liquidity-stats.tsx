@@ -10,12 +10,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import {
-  createDataItemSigner,
-  dryrun,
-  message,
-  result,
-} from "@permaweb/aoconnect";
+import { createDataItemSigner, dryrun } from "@permaweb/aoconnect";
 import { ArflashAoId } from "@/constants/constants";
 import { useEffect, useState } from "react";
 import { useConnection } from "arweave-wallet-kit";
@@ -36,9 +31,27 @@ export function LiquidityStats() {
   const [totalLiquidity, setTotalLiquidity] = useState(0);
   const [currentApy, setCurrentApy] = useState(0);
   const [rewardsEarned, setRewardsEarned] = useState(0);
+  const [userLiquidity, selectUserLiquidity] = useState(0);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchTotalLiquidity = async () => {
+      if (connected) {
+        const res = await dryrun({
+          process: ArflashAoId,
+          tags: [{ name: "Action", value: "TotalLiquidity" }],
+          data: "",
+          anchor: "1234",
+          signer: createDataItemSigner(window.arweaveWallet),
+        });
+
+        if (res.Error) {
+          console.error(res.Error);
+        }
+        console.log(res.Messages[0].Tags[4].value);
+        setTotalLiquidity(Number(res.Messages[0].Tags[4].value));
+      }
+    };
+    const fetchUserLiquidity = async () => {
       if (connected) {
         const res = await dryrun({
           process: ArflashAoId,
@@ -57,11 +70,13 @@ export function LiquidityStats() {
         if (res.Error) {
           console.error(res.Error);
         }
+        console.log(res.Messages[0].Tags);
         console.log(res.Messages[0].Tags[4].value);
-        setTotalLiquidity(Number(res.Messages[0].Tags[4].value));
+        selectUserLiquidity(Number(res.Messages[0].Tags[4].value));
       }
     };
-    fetchData();
+    fetchTotalLiquidity();
+    fetchUserLiquidity();
   }, [connected]);
 
   return (
@@ -83,6 +98,10 @@ export function LiquidityStats() {
             <div>
               <p className="text-sm text-muted-foreground">Rewards Earned</p>
               <p className="text-2xl font-bold">${rewardsEarned.toFixed(2)}</p>
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Your Liquidity</p>
+              <p className="text-2xl font-bold">${userLiquidity.toFixed(2)}</p>
             </div>
           </div>
           <div className="h-[200px]">
