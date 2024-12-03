@@ -23,8 +23,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertTriangle } from "lucide-react";
 import { WalletConnect } from "./wallet-connect";
 import { TransactionPreview } from "./transaction-preview";
-import { useConnection } from "arweave-wallet-kit";
-import { useActiveAddress } from "arweave-wallet-kit";
+import { useConnection, useActiveAddress } from "arweave-wallet-kit";
 import { toast } from "sonner";
 
 const supportedTokens = [
@@ -74,7 +73,7 @@ export default function FlashLoanInterface() {
         tags: [
           {
             name: "Action",
-            value: "requestLoan",
+            value: "RequestLoan",
           },
           {
             name: "amount",
